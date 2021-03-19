@@ -9,9 +9,9 @@ create table`Employee`
 `email` varchar(50) Default NULL,
 `details_id` int(11) Default null,
 
-
 KEY `FK_DETAIL_id` (`details_id`),
-  CONSTRAINT `FK_DETAIL` FOREIGN KEY (`details_id`) REFERENCES `Details` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+CONSTRAINT `FK_DETAIL` FOREIGN KEY (`details_id`) REFERENCES `Details` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+
 
 primary key (`id`)
 );
