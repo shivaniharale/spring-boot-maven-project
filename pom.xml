@@ -34,6 +34,18 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		
+
+<dependency>
+  <groupId>io.springfox</groupId>
+  <artifactId>springfox-swagger2</artifactId>
+  <version>3.0.0</version>
+</dependency>
+		
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
@@ -69,7 +81,7 @@
         <groupId>org.liquibase</groupId>
         <artifactId>liquibase-maven-plugin</artifactId>
         <configuration> 
-             <changeLogFile>src/main/resources/liquibase/liquibase-ChangeLog.xml</changeLogFile>            
+             <changeLogFile>src/main/resources/liquibase/liquibaseMaster.xml</changeLogFile>            
             <propertyFile>src/main/resources/application.properties</propertyFile>
         </configuration>                
     </plugin> 
