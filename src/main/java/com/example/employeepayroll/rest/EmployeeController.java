@@ -22,6 +22,23 @@ public class EmployeeController {
 	
 	@Autowired
 	private ServiceInterface service;
+	
+	
+	@GetMapping("/loginPage")
+	public String getloginPage() {
+		
+		return "loginpage";
+	}
+	
+	
+//	@GetMapping("employees")
+//	public String getloginPage() {
+//		
+//		return "employees";
+//	}
+	
+	
+	
 
 	@GetMapping("/employees")
 	public List<Employee> getEmployeeList(){

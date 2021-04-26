@@ -34,4 +34,32 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.l
     <changeSet author="Coditas (generated)" id="1617187216048-4">
         <addForeignKeyConstraint baseColumnNames="details_id" baseTableName="employee" constraintName="FK_DETAIL" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="details" validate="true"/>
     </changeSet>
+    
+    
+    <!-- NEW USERS TABLE ADDITION -->
+      
+    <changeSet id="1" author="shivani">
+    <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="username" type="VARCHAR(50)"/>
+            <column name="password" type="VARCHAR(50)"/>
+            <column name="employee_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet author="shivani" id="2">
+        <createIndex indexName="FK_EMPLOYEE_id" tableName="users">
+            <column name="employee_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="shivani" id="3">
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="users" constraintName="FK_EMPLOYEE" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+    </changeSet>
+    
+   
+    
+    
+    
 </databaseChangeLog>

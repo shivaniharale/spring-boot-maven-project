@@ -58,10 +58,22 @@
 		</dependency>
 		
 		
+		
+		<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-security</artifactId>
+  <version>2.4.4</version>
+</dependency>
+		
+		
+		
+		
+		
+		
 <dependency>
   <groupId>org.liquibase</groupId>
   <artifactId>liquibase-core</artifactId>
-
+  <version>4.3.2</version>
 </dependency>
 		
 		
@@ -80,6 +92,7 @@
 			 <plugin>
         <groupId>org.liquibase</groupId>
         <artifactId>liquibase-maven-plugin</artifactId>
+        <version>4.3.2</version>
         <configuration> 
              <changeLogFile>src/main/resources/liquibase/liquibaseMaster.xml</changeLogFile>            
             <propertyFile>src/main/resources/application.properties</propertyFile>
