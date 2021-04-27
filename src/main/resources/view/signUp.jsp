@@ -4,22 +4,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>LoginPage</title>
+<title>SignUp</title>
 </head>
 <body>
-<h1>Login Page </h1>
+<h1>Sign Up</h1>
 
-<form action="home" method="get">
+
+<form action="home" method="post">
 <p>
-User Name:<input type="text" name="UserName" placeholder="Enter user name">
-
+User Name:<input type="text" name="User Name" placeholder="Enter user name">
 
 Password:<input type="text" name="Password" placeholder="Enter password">
+
+Confirm Password:<input type="text" name="ConfirmedPassword" placeholder="Re Enter password">
 </p>
 <input type="submit">
 </form>
 
-<a href="signUp">Sign Up</a>
+<a href="loginIn">Back to Login Page</a>
+
+
 
 </body>
 </html>
