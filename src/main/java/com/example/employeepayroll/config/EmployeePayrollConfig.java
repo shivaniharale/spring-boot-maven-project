@@ -12,7 +12,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebSecurity
-@EnableWebMvc
 @ComponentScan(basePackages="com.example.employeepayroll")
 public class EmployeePayrollConfig extends WebSecurityConfigurerAdapter{
  

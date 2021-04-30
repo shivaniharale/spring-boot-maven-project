@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.employeepayroll.service.ServiceInterface;
 
 @Controller
+@RequestMapping("/")
 public class EmployeeJspController {
 	
 	@Autowired
