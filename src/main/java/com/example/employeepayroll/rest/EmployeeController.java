@@ -3,7 +3,6 @@ package com.example.employeepayroll.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,49 +10,48 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.example.employeepayroll.entity.Details;
-import com.example.employeepayroll.entity.Employee;
+import com.example.employeepayroll.dto.DetailsDTO;
+import com.example.employeepayroll.dto.EmployeeDTO;
 import com.example.employeepayroll.service.ServiceInterface;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class EmployeeController {
 	
 	@Autowired
 	private ServiceInterface service;
 	
-	
-
 	@GetMapping("/employees")
-	public List<Employee> getEmployeeList(){
+	public List<EmployeeDTO> getEmployeeList(){
 		
 		return service.employeeList();
 	}
 	
 	@GetMapping("/employees/{id}")
-	public Employee getEmployee(@PathVariable int id){
+	public EmployeeDTO getEmployee(@PathVariable int id){
 		
 		return service.getEmployee(id);
 
 	}
 	
 	@PostMapping("/employees")
-	public Employee createEmployee(@RequestBody Employee employee){
+	public EmployeeDTO createEmployee(@RequestBody EmployeeDTO employeeDTO){
 		
-		employee.setId(0);
+		employeeDTO.setId(0);
 		
-		service.saveOrUpdateEmployee(employee);
+		service.saveOrUpdateEmployee(employeeDTO);
 	
-		return employee;
+		return employeeDTO;
 	}
 	
 	@PutMapping("/employees")
-	public Employee updateEmployee(@RequestBody Employee employee){
+	public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO){
 		
-		service.saveOrUpdateEmployee(employee);
+		service.saveOrUpdateEmployee(employeeDTO);
 		
-		return employee;
+		return employeeDTO;
 	}
 	
 	@DeleteMapping("/employees/{id}")
@@ -65,18 +63,32 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/employeedetails")
-	public List<Details> getDetailsList(){
+	public List<DetailsDTO> getDetailsList(){
 		
 		return service.detailsList();
 	}
 	
 	@GetMapping("/employeedetails/{id}")
-	public Details getDetails(@PathVariable int id){
+	public DetailsDTO getDetails(@PathVariable int id){
 		
 		return service.getDetails(id);
 	}
+	
+//	@PostMapping("/employeedetails")
+//	public DetailsDTO createDetails(@RequestBody DetailsDTO detailsDTO){
+//		
+//		service.saveOrUpdateDetails(detailsDTO);
+//	
+//		return detailsDTO;
+//	}
+//	
+//	@PutMapping("/employeedetails")
+//	public DetailsDTO updateDetails(@RequestBody DetailsDTO detailsDTO){
+//		
+//		service.saveOrUpdateDetails(detailsDTO);
+//		
+//		return detailsDTO;
+//	
+//	}
 
-	
-	
-	
 }

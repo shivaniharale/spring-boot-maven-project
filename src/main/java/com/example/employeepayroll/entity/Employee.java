@@ -3,6 +3,7 @@ package com.example.employeepayroll.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +17,8 @@ public class Employee {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private int id;
+	@Column(name="srNum")
+	private int srNum;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -31,20 +32,22 @@ public class Employee {
 	@Column(name="email")
 	private String email;
 	
-	
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="details_id")
 	private Details details;
 	
 	
-
-	public int getId() {
-		return id;
+	public Employee() {
+		
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getSrNum() {
+		return srNum;
+	}
+
+	public void setSrNum(int srNum) {
+		this.srNum = srNum;
 	}
 
 	public String getFirstName() {
@@ -79,9 +82,6 @@ public class Employee {
 		this.email = email;
 	}
 	
-	
-	
-
 	public Details getDetails() {
 		return details;
 	}
@@ -92,7 +92,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone
+		return "Employee [id=" + srNum + ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone
 				+ ", email=" + email + ", details=" + details + "]";
 	}
 

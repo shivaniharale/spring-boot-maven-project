@@ -11,7 +11,6 @@ import javax.persistence.Table;
 @Table(name="Details")
 public class Details {
 
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
@@ -23,6 +22,9 @@ public class Details {
 	@Column(name="salary")
 	private int salary;
 	
+	@Column(name="post")
+	private String post;
+	
 	@Column(name="status")
 	private String status;
 
@@ -32,10 +34,16 @@ public class Details {
 //	private Employee employee;
 //	
 	
+	public Details() {
+	
+	}
+	
 	
 	public int getId() {
 		return id;
 	}
+
+
 
 	public void setId(int id) {
 		this.id = id;
@@ -48,6 +56,17 @@ public class Details {
 	public void setEmployeeNumber(int employeeNumber) {
 		this.employeeNumber = employeeNumber;
 	}
+
+	
+	public String getPost() {
+		return post;
+	}
+
+
+	public void setPost(String post) {
+		this.post = post;
+	}
+
 
 	public int getSalary() {
 		return salary;
@@ -71,11 +90,5 @@ public class Details {
 				+ "]";
 	}
 
-
-	
-	
-	
-	
-	
 	
 }

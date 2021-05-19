@@ -2,28 +2,24 @@ package com.example.employeepayroll.service;
 
 import java.util.List;
 
-import com.example.employeepayroll.entity.Details;
-import com.example.employeepayroll.entity.Employee;
+import com.example.employeepayroll.dto.DetailsDTO;
+import com.example.employeepayroll.dto.EmployeeDTO;
 
 public interface ServiceInterface {
 
-	public List<Employee> employeeList();
+	public List<EmployeeDTO> employeeList();
 	
-	public void saveOrUpdateEmployee(Employee employee);
+	public void saveOrUpdateEmployee(EmployeeDTO employeeDTO);
 
-	public Employee getEmployee(int id);
+	public EmployeeDTO getEmployee(int id);
 	
-	public void deleteEmployee(int id );
+	public void deleteEmployee(int id);
 	
 
-	public List<Details> detailsList();
+	public List<DetailsDTO> detailsList();
 	
-	public void saveOrUpdateDetails(Details details);
+//	public void saveOrUpdateDetails(DetailsDTO detailsDTO);
 
-	public Details getDetails(int id);
-	
-	public void deleteDetails(int id);
-	
-	
-	
+	public DetailsDTO getDetails(int id);
+
 }

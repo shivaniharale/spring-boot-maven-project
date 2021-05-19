@@ -32,11 +32,57 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		
+
+<dependency>
+  <groupId>io.springfox</groupId>
+  <artifactId>springfox-swagger2</artifactId>
+  <version>3.0.0</version>
+</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		
+<!--		
+		<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-security</artifactId>
+  <version>2.4.4</version>
+</dependency>
+		
+-->	
+		
+		
+		
+<dependency>
+  <groupId>org.liquibase</groupId>
+  <artifactId>liquibase-core</artifactId>
+  <version>4.3.2</version>
+</dependency>
+
+
+<dependency>
+  <groupId>org.modelmapper</groupId>
+  <artifactId>modelmapper</artifactId>
+  <version>2.4.3</version>
+</dependency>
+		
+		
 	</dependencies>
 
 	<build>
@@ -45,6 +91,20 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+	
+			
+			 <plugin>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>4.3.2</version>
+        <configuration> 
+             <changeLogFile>src/main/resources/liquibase/liquibaseMaster.xml</changeLogFile>            
+            <propertyFile>src/main/resources/application.properties</propertyFile>
+        </configuration>                
+    </plugin> 
+			
+			
 		</plugins>
 	</build>
 
