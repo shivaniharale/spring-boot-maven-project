@@ -6,11 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.employeepayroll.Converter.EmployeeDetailsConverter;
+import com.example.employeepayroll.Converter.CourseConverter;
+import com.example.employeepayroll.Converter.DetailsConverter;
+import com.example.employeepayroll.Converter.EmployeeConverter;
+import com.example.employeepayroll.dao.CourseJPARepo;
 import com.example.employeepayroll.dao.DetailsDAO;
 import com.example.employeepayroll.dao.EmployeeDAO;
+import com.example.employeepayroll.dto.CourseDTO;
 import com.example.employeepayroll.dto.DetailsDTO;
 import com.example.employeepayroll.dto.EmployeeDTO;
+import com.example.employeepayroll.entity.Course;
 import com.example.employeepayroll.entity.Details;
 import com.example.employeepayroll.entity.Employee;
  
@@ -25,21 +30,32 @@ public class ServiceInterfaceImpl implements ServiceInterface {
 	private DetailsDAO detailsDAO;
 	
 	@Autowired
-	private EmployeeDetailsConverter employeeDetailsConverter;
+	private EmployeeConverter employeeConverter;
+	
+	@Autowired
+	private CourseConverter courseConverter;
+	
+	@Autowired
+	private DetailsConverter detailsConverter;
+	
+	@Autowired
+	private CourseJPARepo courseJPARepo;
+	
+	
 	
 	@Override
 	public List<EmployeeDTO> employeeList() {
 			
 		List<Employee> list=employeeDAO.employeeList();
 		
-		return employeeDetailsConverter.employeeEntityToDTO(list);
+		return employeeConverter.employeeEntityToDTO(list);
 		
 	}
 
 	@Override
 	public void saveOrUpdateEmployee(EmployeeDTO employeeDTO) {
 		
-		Employee employee=employeeDetailsConverter.employeeDtoToEntity(employeeDTO);
+		Employee employee=employeeConverter.employeeDtoToEntity(employeeDTO);
 		
 		employeeDAO.saveOrUpdateEmployee(employee);
 		
@@ -48,15 +64,17 @@ public class ServiceInterfaceImpl implements ServiceInterface {
 	@Override
 	public EmployeeDTO getEmployee(int id) {
 		
-		Employee employee=employeeDAO.getEmployee(id);
 		
-		return employeeDetailsConverter.employeeEntityToDTO(employee);
-	}
+			
+		Employee employee=employeeDAO.getEmployee(id);
+		return employeeConverter.employeeEntityToDTO(employee);
+
+		}
 
 	@Override
 	public void deleteEmployee(int id) {
 
-//		employeeDAO.deleteEmployee(id);
+		employeeDAO.deleteEmployee(id);
 	
 	}
 
@@ -65,23 +83,41 @@ public class ServiceInterfaceImpl implements ServiceInterface {
 		
 		List<Details> list=detailsDAO.detailsList();
 		
-		return employeeDetailsConverter.detailsEntityToDTO(list);
+		return detailsConverter.detailsEntityToDTO(list);
 		
 	}
 
-//	@Override
-//	public void saveOrUpdateDetails(DetailsDTO detailsDTO) {
-//
-//		Details details=employeeDetailsConverter.detailsDtoToEntity(detailsDTO);
-//		
-//		detailsDAO.saveOrUpdateDetails(details);
-//		
-//	}
+	@Override
+	public void saveOrUpdateDetails(DetailsDTO detailsDTO) {
+
+		Details details=detailsConverter.detailsDtoToEntity(detailsDTO);
+		
+		detailsDAO.saveOrUpdateDetails(details);
+		
+	}
 
 	@Override
 	public DetailsDTO getDetails(int id) {
 		Details details=detailsDAO.getDetails(id);
-		return employeeDetailsConverter.detailsEntityToDTO(details);
+		return detailsConverter.detailsEntityToDTO(details);
+	}
+
+	@Override
+	public List<CourseDTO> getCourses(int id) {
+		Employee employee=employeeDAO.getEmployee(id);
+		
+		List<Course> courses=employee.getCourses();
+				
+		return courseConverter.courseEntityToDTO(courses);
+	}
+
+
+	@Override
+	public void saveOrUpdateCourseList(CourseDTO newCourse) {
+		
+		Course course=courseConverter.courseDtoToEntity(newCourse);
+		
+		courseJPARepo.save(course);
 	}
 
 	

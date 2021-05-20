@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.employeepayroll.dto.CourseDTO;
 import com.example.employeepayroll.dto.DetailsDTO;
 import com.example.employeepayroll.dto.EmployeeDTO;
 import com.example.employeepayroll.service.ServiceInterface;
@@ -39,7 +40,7 @@ public class EmployeeController {
 	@PostMapping("/employees")
 	public EmployeeDTO createEmployee(@RequestBody EmployeeDTO employeeDTO){
 		
-		employeeDTO.setId(0);
+		employeeDTO.setSrNum(0);
 		
 		service.saveOrUpdateEmployee(employeeDTO);
 	
@@ -74,21 +75,48 @@ public class EmployeeController {
 		return service.getDetails(id);
 	}
 	
-//	@PostMapping("/employeedetails")
-//	public DetailsDTO createDetails(@RequestBody DetailsDTO detailsDTO){
-//		
-//		service.saveOrUpdateDetails(detailsDTO);
-//	
-//		return detailsDTO;
-//	}
-//	
-//	@PutMapping("/employeedetails")
-//	public DetailsDTO updateDetails(@RequestBody DetailsDTO detailsDTO){
-//		
-//		service.saveOrUpdateDetails(detailsDTO);
-//		
-//		return detailsDTO;
-//	
-//	}
+	
+	@GetMapping("/courseslist/{id}")
+	public List<CourseDTO> getCourses(@PathVariable int id){
+		
+		return service.getCourses(id);
+	}
+	
+	
+	@PostMapping("/courseslist")
+	public CourseDTO saveCourseList(@RequestBody CourseDTO newCourse){
+		
+		service.saveOrUpdateCourseList(newCourse);
+		
+		return newCourse;
+		
+	}
+	
+	@PutMapping("/courseslist")
+	public CourseDTO updateCourseList(@RequestBody CourseDTO newCourse){
+		
+		service.saveOrUpdateCourseList(newCourse);
+		
+		return newCourse;
+		
+	}
+	
+	
+	@PostMapping("/employeedetails")
+	public DetailsDTO createDetails(@RequestBody DetailsDTO detailsDTO){
+		
+		service.saveOrUpdateDetails(detailsDTO);
+	
+		return detailsDTO;
+	}
+	
+	@PutMapping("/employeedetails")
+	public DetailsDTO updateDetails(@RequestBody DetailsDTO detailsDTO){
+		
+		service.saveOrUpdateDetails(detailsDTO);
+		
+		return detailsDTO;
+	
+	}
 
 }

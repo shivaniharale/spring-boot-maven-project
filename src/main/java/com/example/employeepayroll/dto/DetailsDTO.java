@@ -1,11 +1,16 @@
 package com.example.employeepayroll.dto;
 
+import com.example.employeepayroll.entity.Employee;
+
 public class DetailsDTO {
 	private int id;
 	private int employeeNumber;
 	private int salary;
 	private String post;
+	private String status;	
 	
+	public DetailsDTO() {
+	}
 	public int getId() {
 		return id;
 	}
@@ -30,10 +35,11 @@ public class DetailsDTO {
 	public void setPost(String post) {
 		this.post = post;
 	}
-	@Override
-	public String toString() {
-		return "DetailsDTO [id=" + id + ", employeeNumber=" + employeeNumber + ", salary=" + salary + ", post=" + post
-				+ "]";
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

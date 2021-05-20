@@ -1,5 +1,8 @@
 package com.example.employeepayroll.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="Employee")
@@ -35,8 +41,12 @@ public class Employee {
 
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="details_id")
+//	@JsonIgnoreProperties("employee")
 	private Details details;
 	
+	@OneToMany(mappedBy="employeeCourse",cascade= {CascadeType.REMOVE, CascadeType.MERGE,CascadeType.REFRESH})
+//	@JsonIgnoreProperties("employeeCourse")
+	private List<Course> courses;
 	
 	public Employee() {
 		
@@ -90,12 +100,28 @@ public class Employee {
 		this.details = details;
 	}
 
-	@Override
-	public String toString() {
-		return "Employee [id=" + srNum + ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone
-				+ ", email=" + email + ", details=" + details + "]";
+	public List<Course> getCourses() {
+		return courses;
 	}
 
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+
+	public void add(Course tempCourse) {
+		
+		if (courses == null) {
+			courses = new ArrayList<>();
+		}
+		
+		courses.add(tempCourse);
+		}
+
+	@Override
+	public String toString() {
+		return "Employee [srNum=" + srNum + ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone
+				+ ", email=" + email + ", details=" + details + ", courses=" + courses + "]";
+	}
 	
 	
 }

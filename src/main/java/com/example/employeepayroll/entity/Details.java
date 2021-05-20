@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,16 +30,28 @@ public class Details {
 	private String status;
 
 
-//	@OneToOne(mappedBy="details",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-//			CascadeType.REFRESH})
-//	private Employee employee;
-//	
+	@OneToOne(mappedBy="details")
+	private Employee employee;
+	
 	
 	public Details() {
 	
 	}
 	
 	
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+
+
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -84,11 +97,6 @@ public class Details {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "Details [id=" + id + ", employeeNumber=" + employeeNumber + ", salary=" + salary + ", status=" + status
-				+ "]";
-	}
 
 	
 }

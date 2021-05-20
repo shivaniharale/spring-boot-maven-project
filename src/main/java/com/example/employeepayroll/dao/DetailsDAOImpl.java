@@ -32,29 +32,33 @@ public class DetailsDAOImpl implements DetailsDAO {
 	public void saveOrUpdateDetails(Details details) {
 
 		Session session=em.unwrap(Session.class);
-
-
 		
 		session.saveOrUpdate(details);
 	}
 
 	@Override
-	public Details getDetails(int id) {
+	public Details getDetails(int id){
 		Session session=em.unwrap(Session.class);
-
 		
 		Details details=session.get(Details.class,id);
-				
+		if(details==null) {
+			throw new NullPointerException("Invalid input");
+		}
+		else {
 		return details;
+		}
 	}
-
 	@Override
 	public void deleteDetails(int id) {
 		Session session=em.unwrap(Session.class);
 
 		Details details=session.get(Details.class,id);
-		
+		if(details==null) {
+			throw new NullPointerException("Invalid input");
+		}
+		else {
 		session.delete(details);
+		}
 	}
 
 }

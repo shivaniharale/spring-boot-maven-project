@@ -7,7 +7,7 @@ import com.example.employeepayroll.entity.Details;
 
 public interface DetailsDAO {
 
-public List<Details> detailsList();
+	public List<Details> detailsList();
 	
 	public void saveOrUpdateDetails(Details details);
 

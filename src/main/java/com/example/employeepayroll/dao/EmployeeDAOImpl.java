@@ -49,8 +49,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		
 		Employee employee=session.get(Employee.class,id);
-				
+			
+		if(employee==null) {
+			throw new NullPointerException("Invalid input");
+		}
+		else {
+		
 		return employee;
+		}
 	}
 
 	@Override
@@ -58,9 +64,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		Session session=em.unwrap(Session.class);
 
 		Employee employee=session.get(Employee.class,id);
-		
+				
 		session.delete(employee);
-		
+
 	}
 
 }
