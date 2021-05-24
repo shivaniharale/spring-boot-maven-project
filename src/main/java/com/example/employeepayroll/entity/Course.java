@@ -1,5 +1,8 @@
 package com.example.employeepayroll.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,25 +13,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 
 @Entity
 @Table(name="Course")
-public class Course {
-	
+public class Course implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
-	
+
 	@Column(name="course_name")
 	private String courseName;
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade= { CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinColumn(name="employee_id_course")
-//	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "course_employee")
 //	@JsonIgnoreProperties("courses")
-	private Employee employeeCourse;
+	@JsonIgnore
+	private Employee employee;
 
 	public int getId() {
 		return id;
@@ -45,6 +49,21 @@ public class Course {
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	@Override
+	public String toString() {
+		return "Course [id=" + id + ", courseName=" + courseName + ", employee=" + employee + "]";
+	}
+
+
 
 
 

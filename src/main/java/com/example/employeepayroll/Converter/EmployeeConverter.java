@@ -14,84 +14,64 @@ import com.example.employeepayroll.entity.Employee;
 
 @Component
 public class EmployeeConverter {
-	
 
-Logger log = Logger.getLogger(EmployeeConverter.class.getName());
-	
+
+	Logger log = Logger.getLogger(EmployeeConverter.class.getName());
+
 	@Autowired
 	EmployeeConverter employeeConverter;
 
+
+	@Autowired
+	CourseConverter courseConverter;
+
 	public EmployeeDTO employeeEntityToDTO(Employee employee) {
 
-//		EmployeeDTO dto=new EmployeeDTO();
-//
-//		dto.setSrNum(employee.getSrNum());
-//		dto.setFirstName(employee.getFirstName());
-//		dto.setLastName(employee.getLastName());
-//		dto.setPhone(employee.getPhone());
-//		dto.setEmail(employee.getEmail());
-//		dto.setDetails(employee.getDetails());
+		EmployeeDTO dto=new EmployeeDTO();
 
-		ModelMapper mapper=new ModelMapper();
-		log.info(employee);
-		EmployeeDTO dto=mapper.map(employee,EmployeeDTO.class);
-		log.info(dto);
-		mapper.getConfiguration()
-		  .setMatchingStrategy(MatchingStrategies.STRICT);
-		log.info("NEW"+dto);
-//		dto.setCourses(employee.getCourses().stream().map(employeeConverter::employeeEntityToDTO).collect(Collectors.toList()));
+		dto.setId(employee.getId());
+		dto.setFirstName(employee.getFirstName());
+		dto.setLastName(employee.getLastName());
+		dto.setPhone(employee.getPhone());
+		dto.setEmail(employee.getEmail());
+		dto.setEmployeeNumber(employee.getEmployeeNumber());
+		dto.setSalary(employee.getSalary());
+		dto.setPost(employee.getPost());
+		dto.setStatus(employee.getStatus());
+		dto.setCourses(courseConverter.courseEntityToDTO(employee.getCourses()));
+
+		log.info("DTO"+employee.getCourses());
+		System.out.print("DTO"+courseConverter.courseEntityToDTO(employee.getCourses()));
 
 
-		return dto;		
-	}	
+
+		return dto;
+	}
 
 
 	public List<EmployeeDTO> employeeEntityToDTO(List<Employee> employees) {
-		
+
 		return employees.stream().map(x->employeeEntityToDTO(x)).collect(Collectors.toList());
 
-//	double a=employees.size();
-//		
-//		List<EmployeeDTO> list = a.stream().map(employees -> {
-//			EmployeeDTO employeeDTO = new EmployeeDTO();
-//            try {
-//                PropertyUtils.copyProperties(employeeDTO, employees);
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//            return employeeDTO;
-//        }).collect(Collectors.toList());
-//
-//        list.forEach(System.out::println);
-//        
-//        return list;
-		
-		
 	}
+
+
 
 	public Employee employeeDtoToEntity(EmployeeDTO dto) {
 
-		//		ModelMapper modelMapper=new ModelMapper();
+		Employee employee=new Employee();
 
-//		Employee employee=new Employee();
-//
-//		employee.setSrNum(dto.getSrNum());
-//		employee.setFirstName(dto.getFirstName());
-//		employee.setLastName(dto.getLastName());
-//		employee.setPhone(dto.getPhone());
-//		employee.setEmail(dto.getEmail());
-//		employee.setDetails(dto.getDetails());
+		employee.setId(dto.getId());
+		employee.setFirstName(dto.getFirstName());
+		employee.setLastName(dto.getLastName());
+		employee.setPhone(dto.getPhone());
+		employee.setEmail(dto.getEmail());
+		employee.setEmployeeNumber(dto.getEmployeeNumber());
+		employee.setSalary(dto.getSalary());
+		employee.setPost(dto.getPost());
+		employee.setStatus(dto.getStatus());
+		employee.setCourses(courseConverter.courseDtoToEntity(dto.getCourses()));
 
-	//	employee.setCourses(dto.getCourses().stream().map(employeeConverter::employeeDtoToEntity).collect(Collectors.toList()));
-
-
-ModelMapper mapper=new ModelMapper();
-		
-		Employee employee=mapper.map(dto,Employee.class);
-		
-		mapper.getConfiguration()
-		  .setMatchingStrategy(MatchingStrategies.STRICT);
-		
 		return employee;
 	}
 

@@ -2,62 +2,93 @@ package com.example.employeepayroll.dto;
 
 import java.util.List;
 
-import com.example.employeepayroll.entity.Course;
-import com.example.employeepayroll.entity.Details;
-
 public class EmployeeDTO {
-	
-	private int srNum;
+
+
+	private int id;
 	private String firstName;
 	private String lastName;
 	private String phone;
 	private String email;
-	private Details details;
-	private List<Course> courses;
+	private int employeeNumber;
+	private int salary;
+	private String post;
+	private String status;
+	private List<CourseDTO> courses;
+
+
 
 	public EmployeeDTO() {
-		
+
 	}
 
-	public Details getDetails() {
-		return details;
+	public int getEmployeeNumber() {
+		return employeeNumber;
 	}
 
-	public void setDetails(Details details) {
-		this.details = details;
+	public void setEmployeeNumber(int employeeNumber) {
+		this.employeeNumber = employeeNumber;
+	}
+
+	public int getSalary() {
+		return salary;
+	}
+
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+
+	public String getPost() {
+		return post;
+	}
+
+	public void setPost(String post) {
+		this.post = post;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 
 
+//	public List<Course> getCourses() {
+//		return courses;
+//	}
+//
+//
+//
+//
+//	public void setCourses(List<Course> courses) {
+//		this.courses = courses;
+//	}
 
-	public List<Course> getCourses() {
+
+
+
+
+
+	public List<CourseDTO> getCourses() {
 		return courses;
 	}
 
+	public void setCourses(List<CourseDTO> courses) {
 
-
-
-	public void setCourses(List<Course> courses) {
 		this.courses = courses;
+
 	}
 
-
-
-
-
-
-
-	public int getSrNum() {
-		return srNum;
+	public int getId() {
+		return id;
 	}
 
-
-
-	public void setSrNum(int srNum) {
-		this.srNum = srNum;
+	public void setId(int id) {
+		this.id = id;
 	}
-
-
 
 	public String getFirstName() {
 		return firstName;
@@ -83,8 +114,8 @@ public class EmployeeDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 
-	
+
+
 
 }

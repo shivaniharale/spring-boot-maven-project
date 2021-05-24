@@ -2,123 +2,191 @@ package com.example.employeepayroll.service;
 
 import java.util.List;
 
+import com.example.employeepayroll.dao.CourseDAO;
+import com.example.employeepayroll.entity.Course;
+import com.example.employeepayroll.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.employeepayroll.Converter.CourseConverter;
-import com.example.employeepayroll.Converter.DetailsConverter;
 import com.example.employeepayroll.Converter.EmployeeConverter;
-import com.example.employeepayroll.dao.CourseJPARepo;
-import com.example.employeepayroll.dao.DetailsDAO;
 import com.example.employeepayroll.dao.EmployeeDAO;
 import com.example.employeepayroll.dto.CourseDTO;
-import com.example.employeepayroll.dto.DetailsDTO;
 import com.example.employeepayroll.dto.EmployeeDTO;
-import com.example.employeepayroll.entity.Course;
-import com.example.employeepayroll.entity.Details;
-import com.example.employeepayroll.entity.Employee;
- 
+
 @Service
 @Transactional
 public class ServiceInterfaceImpl implements ServiceInterface {
 
 	@Autowired
 	private EmployeeDAO employeeDAO;
-	
-	@Autowired
-	private DetailsDAO detailsDAO;
-	
+
 	@Autowired
 	private EmployeeConverter employeeConverter;
-	
+
 	@Autowired
 	private CourseConverter courseConverter;
-	
+
 	@Autowired
-	private DetailsConverter detailsConverter;
-	
-	@Autowired
-	private CourseJPARepo courseJPARepo;
-	
-	
-	
+	private CourseDAO courseDAO;
+
+
+
 	@Override
 	public List<EmployeeDTO> employeeList() {
-			
-		List<Employee> list=employeeDAO.employeeList();
-		
-		return employeeConverter.employeeEntityToDTO(list);
-		
+
+		try {
+			return employeeConverter.employeeEntityToDTO(employeeDAO.findAll());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 	@Override
-	public void saveOrUpdateEmployee(EmployeeDTO employeeDTO) {
-		
-		Employee employee=employeeConverter.employeeDtoToEntity(employeeDTO);
-		
-		employeeDAO.saveOrUpdateEmployee(employee);
-		
+	public ResponseEntity<String> saveOrUpdateEmployee(EmployeeDTO employeeDTO) {
+
+		try {
+			employeeDAO.save(employeeConverter.employeeDtoToEntity(employeeDTO));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return (ResponseEntity<String>) ResponseEntity.ok();
+
 	}
 
 	@Override
 	public EmployeeDTO getEmployee(int id) {
-		
-		
-			
-		Employee employee=employeeDAO.getEmployee(id);
-		return employeeConverter.employeeEntityToDTO(employee);
 
+		try {
+			return employeeConverter.employeeEntityToDTO(employeeDAO.findById(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 
-	@Override
-	public void deleteEmployee(int id) {
-
-		employeeDAO.deleteEmployee(id);
-	
 	}
 
 	@Override
-	public List<DetailsDTO> detailsList() {
-		
-		List<Details> list=detailsDAO.detailsList();
-		
-		return detailsConverter.detailsEntityToDTO(list);
-		
-	}
+	public ResponseEntity<String> deleteEmployee(int id) {
 
-	@Override
-	public void saveOrUpdateDetails(DetailsDTO detailsDTO) {
+		try {
+			employeeDAO.deleteById(id);
 
-		Details details=detailsConverter.detailsDtoToEntity(detailsDTO);
-		
-		detailsDAO.saveOrUpdateDetails(details);
-		
-	}
+		} catch (Exception e) {
+			e.printStackTrace();
 
-	@Override
-	public DetailsDTO getDetails(int id) {
-		Details details=detailsDAO.getDetails(id);
-		return detailsConverter.detailsEntityToDTO(details);
-	}
+			return null;
+		}
+		return (ResponseEntity<String>) ResponseEntity.ok();
 
-	@Override
-	public List<CourseDTO> getCourses(int id) {
-		Employee employee=employeeDAO.getEmployee(id);
-		
-		List<Course> courses=employee.getCourses();
-				
-		return courseConverter.courseEntityToDTO(courses);
+
 	}
 
 
 	@Override
-	public void saveOrUpdateCourseList(CourseDTO newCourse) {
-		
-		Course course=courseConverter.courseDtoToEntity(newCourse);
-		
-		courseJPARepo.save(course);
+	public ResponseEntity<String> saveOrUpdateCourseList(CourseDTO newCourse) {
+
+		try {
+			courseDAO.save(courseConverter.courseDtoToEntity(newCourse));
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return (ResponseEntity<String>) ResponseEntity.ok();
+
 	}
 
-	
+	@Override
+	public List<CourseDTO> getEmployeeCourses(int id) {
+
+		try {
+			Employee e=employeeDAO.findById(id);
+
+			List<Course> list=e.getCourses();
+
+			return courseConverter.courseEntityToDTO(list);
+
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			return null;
+		}
+
+	}
+
+	@Override
+	public List<CourseDTO> getEmployeeCourses() {
+		try {
+			return courseConverter.courseEntityToDTO(courseDAO.findAll());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public List<EmployeeDTO> getEmployeeByFirstName(String firstName) {
+
+		try {
+			return employeeConverter.employeeEntityToDTO(employeeDAO.findByfirstName(firstName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+
+	}
+
+	@Override
+	public EmployeeDTO getEmployeeByEmployeeNumber(int employeeNumber) {
+
+		try {
+			return employeeConverter.employeeEntityToDTO(employeeDAO.findByEmployeeNumber(employeeNumber));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	@Override
+	public List<EmployeeDTO> getEmployeeByLastName(String lastName) {
+		try {
+			return employeeConverter.employeeEntityToDTO(employeeDAO.findByLastName(lastName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	@Override
+	public List<EmployeeDTO> getEmployeeByStatus(String status) {
+		try {
+			return employeeConverter.employeeEntityToDTO(employeeDAO.findByStatus(status));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	@Override
+	public List<EmployeeDTO> getEmployeeByPost(String post) {
+		try {
+			return employeeConverter.employeeEntityToDTO(employeeDAO.findByPost(post));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+
 }

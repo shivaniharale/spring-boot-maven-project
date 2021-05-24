@@ -6,21 +6,11 @@ public class CourseDTO {
 
 	private int id;
 	private String courseName;
-	private Employee employeeCourse;
 
 	public CourseDTO() {
 		
 	
 	}
-
-	public Employee getEmployeeCourse() {
-		return employeeCourse;
-	}
-
-	public void setEmployeeCourse(Employee employeeCourse) {
-		this.employeeCourse = employeeCourse;
-	}
-
 
 	public int getId() {
 		return id;
