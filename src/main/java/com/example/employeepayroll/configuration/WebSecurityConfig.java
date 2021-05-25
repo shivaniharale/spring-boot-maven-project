@@ -22,8 +22,6 @@ import java.util.logging.Logger;
 @PropertySource("classpath:application.properties")
 public class WebSecurityConfig {
 
-
-
         @Autowired
         private Environment environment;
 
@@ -45,31 +43,24 @@ public class WebSecurityConfig {
 			ComboPooledDataSource dataSource= new ComboPooledDataSource();
 
 			try {
-				dataSource.setDriverClass(environment.getProperty("spring.datasource.url"));
+				dataSource.setDriverClass(environment.getProperty("jdbc:mysql://localhost:3306/employee_payroll"));
 			} catch (PropertyVetoException exc) {
 				throw new RuntimeException(exc);
 			}
 
-			Logger logger= Logger.getLogger(getClass().getName());
+			dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/employee_payroll");
+			dataSource.setUser("root");
+			dataSource.setPassword("root");
 
-			logger.info("jdbc.url=" + environment.getProperty("spring.datasource.url"));
-			logger.info(" jdbc.user=" + environment.getProperty("spring.datasource.username"));
+			dataSource.setInitialPoolSize(5);
 
+			dataSource.setMinPoolSize(5);
 
-			dataSource.setJdbcUrl(environment.getProperty("spring.datasource.url"));
-			dataSource.setUser(environment.getProperty("spring.datasource.username"));
-			dataSource.setPassword(environment.getProperty("spring.datasource.password"));
+			dataSource.setMaxPoolSize(20);
 
+			dataSource.setMaxIdleTime(3000);
 
-			dataSource.setInitialPoolSize(Integer.parseInt(environment.getProperty("connection.pool.initialPoolSize")));
-
-			dataSource.setMinPoolSize(Integer.parseInt(environment.getProperty("connection.pool.minPoolSize")));
-
-			dataSource.setMaxPoolSize(Integer.parseInt(environment.getProperty("connection.pool.maxPoolSize")));
-
-			dataSource.setMaxIdleTime(Integer.parseInt(environment.getProperty("connection.pool.maxIdleTime")));
-
-			return dataSource;
+            return dataSource;
 		}
 
 

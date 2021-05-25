@@ -21,21 +21,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//
-//        auth.jdbcAuthentication().dataSource(dataSource);
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 
-	@Override
-	public UserDetailsService userDetailsService() {
 
-		InMemoryUserDetailsManager manager=new InMemoryUserDetailsManager();
-		manager.createUser(User.withDefaultPasswordEncoder().username("shivani").password("123").roles("admin").build());
+//       auth.jdbcAuthentication().dataSource(dataSource);
 
-		return manager;
-	}
+        auth.inMemoryAuthentication().withUser("ak").password("123").roles("user");
+
+    }
+
 
 
 
@@ -46,6 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .hasAnyRole("admin","user")
                 .and()
                 .formLogin()
+                .loginPage("/")
+                .loginProcessingUrl("authenticateTheUser")
                 .and()
                 .httpBasic()
                 .and()
@@ -53,12 +51,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/");
 
-
-
-        //.antMatchers("/home").hasAnyRole("USER")
-        //.antMatchers("/getEmployees").hasAnyRole("USER").anyRequest().authenticated().and().formLogin().loginPage("/loginpage").permitAll()
-        //.and().logout().permitAll();
-        //http.csrf().disable();
     }
 
 
