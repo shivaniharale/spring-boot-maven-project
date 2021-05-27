@@ -32,4 +32,9 @@ public interface ServiceInterface {
 
 	public List<EmployeeDTO> getEmployeeByPost(String post);
 
+	public EmployeeDTO getEmployeeByEmail(String email);
+
+	public EmployeeDTO getEmployeeByPhone(String phone);
+
+
 }

@@ -188,5 +188,27 @@ public class ServiceInterfaceImpl implements ServiceInterface {
 
 	}
 
+	@Override
+	public EmployeeDTO getEmployeeByPhone(String email) {
+		try {
+			return employeeConverter.employeeEntityToDTO(employeeDAO.findByEmail(email));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}	}
+
+	@Override
+	public EmployeeDTO getEmployeeByEmail(String phone) {
+		try {
+			return employeeConverter.employeeEntityToDTO(employeeDAO.findByPhone(phone));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+
+
 
 }

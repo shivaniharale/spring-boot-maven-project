@@ -1,7 +1,9 @@
 package com.example.employeepayroll.dto;
 
 import com.example.employeepayroll.entity.Employee;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CourseDTO {
 
 	private int id;
