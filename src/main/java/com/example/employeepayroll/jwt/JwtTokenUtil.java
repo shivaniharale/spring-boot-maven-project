@@ -24,7 +24,6 @@ public class JwtTokenUtil implements Serializable {
     @Value("${jwt.secretkey}")
     private String secretKey;
 
-
     public String getUserNameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
@@ -50,10 +49,10 @@ public class JwtTokenUtil implements Serializable {
 
     public String generateToken(UserDetails userDetails){
         Map<String,Object> claims=new HashMap<>();
-        return doGernerateToken(claims,userDetails.getUsername());
+        return doGenerateToken(claims,userDetails.getUsername());
     }
 
-    private String doGernerateToken(Map<String,Object> claims,String subject){
+    private String doGenerateToken(Map<String,Object> claims,String subject){
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+JWT_TOKEN_VALIDITY*1000))
                 .signWith(SignatureAlgorithm.HS512,secretKey).compact();

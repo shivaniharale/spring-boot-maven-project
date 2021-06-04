@@ -13,13 +13,4 @@ import java.util.List;
 @Repository
 public interface CourseDAO extends JpaRepository<Course, Integer> {
 
-//    @Query("SELECT c FROM Course c WHERE c.id=:id")
-//    List<Course> findCoursesByEmployeeID(@Param("id") int id);
-
-//	@Query("SELECT c FROM Course c WHERE c.id=?1")
-//	List<Course> findCoursesByName(String name);
-
-//    @Query("SELECT c FROM Course c WHERE c.employee=:id")
-//    void saveBYId(@Param("id") int id);
-
 }

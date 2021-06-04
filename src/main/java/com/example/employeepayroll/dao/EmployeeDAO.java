@@ -1,8 +1,10 @@
 package com.example.employeepayroll.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import com.example.employeepayroll.entity.Employee;
+import com.example.employeepayroll.entity.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,21 +13,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmployeeDAO extends JpaRepository<Employee,Integer> {
 
-	List<Employee> findByPost(String post);
+	public List<Employee> findByFirstName(String firstName);
 
-	List<Employee> findByStatus(String status);
+	public List<Employee> findByPost(String post);
 
-	List<Employee> findByLastName(String lastName);
+	public List<Employee> findByStatus(String status);
 
-	Employee findByEmployeeNumber(int employeeNumber);
+	public List<Employee> findByLastName(String lastName);
 
-//	@Query("SELECT e FROM Employee e where e.firstName=:firstName")
-	List<Employee> findByfirstName(String firstName);
+	public Employee findByEmployeeNumber(int employeeNumber);
 
-	Employee findById(int id);
+	public Employee findById(int id);
 
-	Employee findByEmail(String email);
+	List<Employee> findBySkills(Skill skill);
 
-	Employee findByPhone(String phone);
+	@Query("SELECT e FROM Employee e WHERE e.firstName=:firstName AND e.lastName=:lastName")
+	Set<Skill> findByFirstNameLastName(@Param("firstName") String firstName,@Param("lastName") String lastName);
 
 }

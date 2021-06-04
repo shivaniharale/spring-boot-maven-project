@@ -25,23 +25,18 @@ public class JwtAuthenticationController {
 
     @RequestMapping(value = "/authenticate",method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-
         authenticate(authenticationRequest.getUserName(),authenticationRequest.getPassword());
-
         final UserDetails userDetails=jwtUserDetailsService
                                               .loadUserByUsername(authenticationRequest.getUserName());
-
         final String token=jwtTokenUtil.generateToken(userDetails);
-
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public ResponseEntity<?> saveUser(@RequestBody UserEntityDTO userEntityDTO)throws Exception{
+
         return ResponseEntity.ok(jwtUserDetailsService.saveUser(userEntityDTO));
     }
-
-
 
     private void authenticate(String userName,String password) throws Exception{
 
@@ -53,9 +48,4 @@ public class JwtAuthenticationController {
             throw new Exception("Invalid Credentials",e);
         }
     }
-
-
-
-
-
 }

@@ -1,57 +1,44 @@
 package com.example.employeepayroll.rest;
 
 import com.example.employeepayroll.dto.CourseDTO;
-import com.example.employeepayroll.service.ServiceInterface;
+import com.example.employeepayroll.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
 public class CourseController {
 
     @Autowired
-    private ServiceInterface service;
+    private CourseService courseService;
 
 
-    Logger logger= Logger.getLogger(getClass().getName());
-
-
-    @RequestMapping(value = "/courseslist",method = RequestMethod.GET)
+    @RequestMapping(value = "/courses",method = RequestMethod.GET)
     public List<CourseDTO> getCourses(){
-
-        logger.info("INSIDE COURSELIST METHOD");
-        return service.getEmployeeCourses();
+        return courseService.getEmployeeCourses();
     }
 
 
-    @RequestMapping(value = "/courseslist/{id}",method = RequestMethod.GET)
-    public List<CourseDTO> getEmployeeCourses(@PathVariable int id){
-
-        return service.getEmployeeCourses(id);
-    }
 
 
-    @PostMapping("/courseslist/{id}")
+//    @RequestMapping(value = "/courses/{}",method = RequestMethod.GET)
+//    public List<CourseDTO> getEmployeeCourses(@PathVariable String firstName,@PathVariable String lastName){
+//
+//       return courseService.getEmployeeCourses(firstName,lastName);
+//
+//    }
+
+    @PostMapping("/courses/{id}")
     public ResponseEntity<String> saveCourseList(@PathVariable int id,@RequestBody CourseDTO newCourse){
-
-        service.saveOrUpdateCourseList(newCourse);
+        courseService.saveCourse(newCourse);
 
         return ResponseEntity.status(HttpStatus.OK).body("Course Saved Successfully");
 
     }
 
-    @PutMapping("/courseslist")
-    public ResponseEntity<String> updateCourseList(@RequestBody CourseDTO newCourse){
-
-        service.saveOrUpdateCourseList(newCourse);
-
-        return ResponseEntity.status(HttpStatus.OK).body("Course Updated Successfully");
-
-    }
 
 }

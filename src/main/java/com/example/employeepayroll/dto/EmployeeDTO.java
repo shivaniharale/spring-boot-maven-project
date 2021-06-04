@@ -1,12 +1,15 @@
 package com.example.employeepayroll.dto;
 
+import com.example.employeepayroll.entity.Skill;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class EmployeeDTO {
-
 
 	private int id;
 	private String firstName;
@@ -18,11 +21,60 @@ public class EmployeeDTO {
 	private String post;
 	private String status;
 	private List<CourseDTO> courses;
-
-
+	private AddressDTO addressDTO;
+	private List<SkillDTO> skillsDTO;
 
 	public EmployeeDTO() {
 
+	}
+
+
+	public EmployeeDTO(String firstName, String lastName, String phone, String email, int employeeNumber) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.employeeNumber = employeeNumber;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int getEmployeeNumber() {
@@ -57,68 +109,45 @@ public class EmployeeDTO {
 		this.status = status;
 	}
 
-
-
-//	public List<Course> getCourses() {
-//		return courses;
-//	}
-//
-//
-//
-//
-//	public void setCourses(List<Course> courses) {
-//		this.courses = courses;
-//	}
-
-
-
-
-
-
 	public List<CourseDTO> getCourses() {
 		return courses;
 	}
 
 	public void setCourses(List<CourseDTO> courses) {
-
 		this.courses = courses;
-
 	}
 
-	public int getId() {
-		return id;
+	public AddressDTO getAddressDTO() {
+		return addressDTO;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setAddressDTO(AddressDTO addressDTO) {
+		this.addressDTO = addressDTO;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
+	public List<SkillDTO> getSkillsDTO() {
+		return skillsDTO;
 	}
 
+	public void setSkillsDTO(List<SkillDTO> skillsDTO) {
+		this.skillsDTO = skillsDTO;
+	}
 
-
-
+	@Override
+	public String toString() {
+		return "EmployeeDTO{" +
+					   "id=" + id +
+					   ", firstName='" + firstName + '\'' +
+					   ", lastName='" + lastName + '\'' +
+					   ", phone='" + phone + '\'' +
+					   ", email='" + email + '\'' +
+					   ", employeeNumber=" + employeeNumber +
+					   ", salary=" + salary +
+					   ", post='" + post + '\'' +
+					   ", status='" + status + '\'' +
+					   ", courses=" + courses +
+					   ", addressDTO=" + addressDTO +
+					   ", skillsDTO=" + skillsDTO +
+					   '}';
+	}
 }

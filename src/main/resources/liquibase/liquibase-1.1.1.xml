@@ -1,9 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
-xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
-xmlns:pro="http://www.liquibase.org/xml/ns/pro" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.10.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+
+<!--	EMPLOYEE TABLE-->
 
 	<changeSet author="shivani" id="1">
 		<createTable tableName="employee">
@@ -18,9 +18,12 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.l
 			<column name="salary" type="INT(16)"/>
 			<column name="post" type="VARCHAR(64)"/>
 			<column name="status" type="VARCHAR(64)"/>
-
+			<column name="address_id" type="INT(16)"/>
 		</createTable>
 	</changeSet>
+
+<!--	USERS TABLE-->
+
 	<changeSet author="shivani" id="2">
 		<createTable tableName="users">
 			<column autoIncrement="true" name="id" type="INT">
@@ -33,26 +36,53 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.l
 			<column name="user_employee" type="INT(16)"/>
 		</createTable>
 	</changeSet>
+
+<!--	EMPLOYEE TABLE UNIQUE KEYS-->
+
 	<changeSet author="shivani" id="3">
-		<addUniqueConstraint columnNames="email" constraintName="employeeUniqueOne" tableName="employee"/>
-		<addUniqueConstraint columnNames="phone" constraintName="employeeUniqueTwo" tableName="employee"/>
-		<addUniqueConstraint columnNames="employee_number" constraintName="employeeUniqueThree" tableName="employee"/>
+		<addUniqueConstraint columnNames="email"
+							 constraintName="employeeUniqueOne"
+							 tableName="employee"/>
+		<addUniqueConstraint columnNames="phone"
+							 constraintName="employeeUniqueTwo"
+							 tableName="employee"/>
+		<addUniqueConstraint columnNames="employee_number"
+							 constraintName="employeeUniqueThree"
+							 tableName="employee"/>
 	</changeSet>
+
+<!--	USER TABLE FOREIGN KEY-->
+
 	<changeSet author="shivani" id="4">
-		<createIndex indexName="FK_EMPLOYEE_id" tableName="users">
+		<createIndex indexName="fk_employee_id" tableName="users">
 			<column name="user_employee"/>
 		</createIndex>
 	</changeSet>
 	<changeSet author="shivani" id="5">
-		<addForeignKeyConstraint baseColumnNames="user_employee" baseTableName="users" constraintName="FK_EMPLOYEE" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+		<addForeignKeyConstraint baseColumnNames="user_employee"
+								 baseTableName="users"
+								 constraintName="fk_employee_user"
+								 deferrable="false"
+								 initiallyDeferred="false"
+								 onDelete="RESTRICT"
+								 onUpdate="RESTRICT"
+								 referencedColumnNames="id"
+								 referencedTableName="employee"
+								 validate="true"/>
 	</changeSet>
 
+<!--	USER TABLE UNIQUE KEYS-->
 
-	<changeSet author="shivani" id="">
-		<addUniqueConstraint columnNames="username" constraintName="usersUniqueOne" tableName="users"/>
-		<addUniqueConstraint columnNames="username,password" constraintName="usersUniqueTwo" tableName="users"/>
+	<changeSet author="shivani" id="17">
+		<addUniqueConstraint columnNames="username"
+							 constraintName="usersUniqueOne"
+							 tableName="users"/>
+		<addUniqueConstraint columnNames="username,password"
+							 constraintName="usersUniqueTwo"
+							 tableName="users"/>
 	</changeSet>
 
+<!--	COURSE TABLE-->
 
 	<changeSet author="shivani" id="6">
 		<createTable tableName="course">
@@ -61,20 +91,117 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.l
 			</column>
 			<column name="course_name" type="VARCHAR(64)"/>
 			<column name="course_employee" type="INT(16)"/>
-
-
 		</createTable>
 	</changeSet>
 
+<!--	COURSE TABLE FOREIGN KEY-->
+
 	<changeSet author="shivani" id="7">
-		<createIndex indexName="FK_EMPLOYEE_id_COURSE" tableName="course">
+		<createIndex indexName="fk_employee_id_course" tableName="course">
 			<column name="course_employee"/>
 		</createIndex>
 	</changeSet>
+
 	<changeSet author="shivani" id="8">
-		<addForeignKeyConstraint baseColumnNames="course_employee" baseTableName="course" constraintName="FK_EMPLOYEE_COURSE" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+		<addForeignKeyConstraint baseColumnNames="course_employee"
+								 baseTableName="course"
+								 constraintName="fk_employee_course"
+								 deferrable="false"
+								 initiallyDeferred="false"
+								 onDelete="RESTRICT"
+								 onUpdate="RESTRICT"
+								 referencedColumnNames="id"
+								 referencedTableName="employee"
+								 validate="true"/>
+	</changeSet>
+
+<!--	ADDRESS TABLE-->
+
+	<changeSet id="9" author="shivani">
+		<createTable tableName="address">
+			<column autoIncrement="true" name="id" type="INT">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="house_number" type="VARCHAR(64)"/>
+			<column name="street" type="VARCHAR(64)"/>
+			<column name="city" type="VARCHAR(64)"/>
+			<column name="district" type="VARCHAR(64)"/>
+			<column name="state" type="VARCHAR(64)"/>
+			<column name="pin_code" type="VARCHAR(64)"/>
+		</createTable>
+	</changeSet>
+
+<!--	EMPLOYEE TABLE FOREIGN KEY-->
+
+	<changeSet author="shivani" id="10">
+		<createIndex indexName="fk_address_id" tableName="employee">
+			<column name="address_id"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="shivani" id="11">
+		<addForeignKeyConstraint baseColumnNames="address_id"
+								 baseTableName="employee"
+								 constraintName="fk_employee_address"
+								 deferrable="false"
+								 initiallyDeferred="false"
+								 onDelete="RESTRICT"
+								 onUpdate="RESTRICT"
+								 referencedColumnNames="id"
+								 referencedTableName="address"
+								 validate="true"/>
 	</changeSet>
 
 
+	<!-- SKILLS TABLE-->
+	<changeSet id="12" author="shivani">
+		<createTable tableName="skills">
+			<column autoIncrement="true" name="id" type="INT">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="skill" type="VARCHAR(64)"/>
+		</createTable>
+	</changeSet>
+
+<!--	EMPLOYEE SKILLS TABLE-->
+
+	<changeSet id="13" author="shivani">
+		<createTable tableName="employee_skill">
+			<column name="employee_id" type="INT">
+				<constraints nullable="false"></constraints>
+			</column>
+			<column name="skill_id" type="INT">
+				<constraints nullable="false"></constraints>
+			</column>
+		</createTable>
+	</changeSet>
+
+<!--	EMPLOYEE SKILLS TABLE PRIMARY KEYS-->
+
+	<changeSet id="14" author="shivani">
+		<addPrimaryKey tableName="employee_skill" columnNames="employee_id,skill_id"/>
+	</changeSet>
+
+<!--	EMPLOYEE SKILLS TABLE FOREIGN KEY-->
+
+	<changeSet id="15" author="shivani">
+		<addForeignKeyConstraint baseTableName="employee_skill"
+								 baseColumnNames="employee_id"
+								 constraintName="fk_employee_skill_one"
+								 referencedTableName="employee"
+								 referencedColumnNames="id"
+								 deferrable="false"
+								 initiallyDeferred="false"/>
+	</changeSet>
+
+	<changeSet id="16" author="shivani">
+		<addForeignKeyConstraint baseTableName="employee_skill"
+								 baseColumnNames="skill_id"
+								 constraintName="fk_employee_skill_two"
+								 referencedTableName="skills"
+								 referencedColumnNames="id"
+								 deferrable="false"
+								 initiallyDeferred="false"/>
+	</changeSet>
 
 </databaseChangeLog>

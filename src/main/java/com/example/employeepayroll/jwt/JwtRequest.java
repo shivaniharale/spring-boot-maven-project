@@ -9,7 +9,6 @@ public class JwtRequest implements Serializable {
     private String userName;
     private String password;
 
-
     public JwtRequest() {
 
     }

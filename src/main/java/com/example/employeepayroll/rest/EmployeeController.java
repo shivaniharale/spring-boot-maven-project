@@ -1,110 +1,144 @@
 package com.example.employeepayroll.rest;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.example.employeepayroll.Converter.EmployeeConverter;
+import com.example.employeepayroll.Converter.SkillConverter;
+import com.example.employeepayroll.dao.EmployeeDAO;
 import com.example.employeepayroll.dto.EmployeeDTO;
-import com.example.employeepayroll.service.ServiceInterface;
+
+import com.example.employeepayroll.entity.Skill;
+import com.example.employeepayroll.service.CourseService;
+import com.example.employeepayroll.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
 
 	@Autowired
-	private ServiceInterface service;
+	private EmployeeService service;
 
+	@Autowired
+	private EmployeeDAO employeeDAO;
+
+	@Autowired
+	private EmployeeConverter employeeConverter;
+
+	@Autowired
+	SkillConverter skillConverter;
+
+	@Autowired
+	CourseService courseService;
+
+	private static final Logger LOGGER= Logger.getLogger(String.valueOf(EmployeeController.class));
 
 	@GetMapping("/employees")
-	public List<EmployeeDTO> getEmployeeList(){
-
-		List<EmployeeDTO> list=service.employeeList();
-		if (list!=null) {
+	public List<EmployeeDTO> getEmployeeList() {
+		List<EmployeeDTO> list = service.employeeList();
+		if (list != null) {
 			return service.employeeList();
 		} else {
-			throw new NullPointerException("Invalid input/Employee list is empty");
+			throw new NullPointerException("Employee list is empty");
 		}
-
 	}
-
-//	@GetMapping("/employees/{firstName}")
-//	public List<EmployeeDTO> getEmployeeByFirstName(@PathVariable String firstName){
-//
-//		return service.getEmployeeByFirstName(firstName);
-//
-//	}
-//
-//	@GetMapping("/employees/{lastName}")
-//	public List<EmployeeDTO> getEmployeeByLastName(@PathVariable String lastName){
-//
-//		return service.getEmployeeByLastName(lastName);
-//
-//	}
-//
-//	@GetMapping("/employees/{employeeNumber}")
-//	public EmployeeDTO getEmployeeByEmployeeNumber(@PathVariable int employeeNumber){
-//
-//		return service.getEmployeeByEmployeeNumber(employeeNumber);
-//
-//	}
-//
-//	@GetMapping("/employees/{post}")
-//	public List<EmployeeDTO> getEmployeeByPost(@PathVariable String post){
-//
-//		return service.getEmployeeByPost(post);
-//
-//	}
-//
-//	@GetMapping("/employees/{status}")
-//	public List<EmployeeDTO> getEmployeeByStatus(@PathVariable String status){
-//
-//		return service.getEmployeeByStatus(status);
-//
-//	}
-
 
 	@PostMapping("/employees")
-	public ResponseEntity<String> createEmployee(@RequestBody EmployeeDTO employeeDTO){
-
+	public ResponseEntity<?> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
 		employeeDTO.setId(0);
-
-		service.saveOrUpdateEmployee(employeeDTO);
-
-		return ResponseEntity.status(HttpStatus.OK).body("Employee Saved Successfully");
-
+		return ResponseEntity.ok(service.saveEmployee(employeeDTO));
 	}
 
-	@PutMapping("/employees")
-	public ResponseEntity<String> updateEmployee(@RequestBody EmployeeDTO employeeDTO){
+	@RequestMapping(value = "/firstName/{firstName}",method = RequestMethod.GET)
+	public List<EmployeeDTO> getEmployeeByFirstName(@PathVariable String firstName) {
+		try {
 
-		service.saveOrUpdateEmployee(employeeDTO);
-
-		return ResponseEntity.status(HttpStatus.OK).body("Employee Updated Successfully");
+			return service.getEmployeeByFirstName(firstName);
+		} catch (Exception e) {
+			System.out.println("Employee not found" + e.toString());
+			return null;
+		}
 	}
+
+
+	@GetMapping("/lastName/{lastName}")
+	public List<EmployeeDTO> getEmployeeByLastName(@PathVariable String lastName) {
+		try {
+			return service.getEmployeeByLastName(lastName);
+		} catch (Exception e) {
+			System.out.println("Employee not found" + e.toString());
+			return null;
+		}
+	}
+
+	@GetMapping("/employeeNumber/{employeeNumber}")
+	public EmployeeDTO getEmployeeByEmployeeNumber(@PathVariable int employeeNumber) {
+		try {
+			return service.getEmployeeByEmployeeNumber(employeeNumber);
+		} catch (Exception e) {
+			System.out.println("Employee not found" + e.toString());
+			return null;
+		}
+	}
+
+	@GetMapping("/post/{post}")
+	public List<EmployeeDTO> getEmployeeByPost(@PathVariable String post) {
+		try {
+			return service.getEmployeeByPost(post);
+		} catch (Exception e) {
+			System.out.println("Employee not found" + e.toString());
+			return null;
+		}
+	}
+
+	@GetMapping("/status/{status}")
+	public List<EmployeeDTO> getEmployeeByStatus(@PathVariable String status) {
+		try {
+			return service.getEmployeeByStatus(status);
+		} catch (Exception e) {
+			System.out.println("Employee not found" + e.toString());
+			return null;
+		}
+	}
+
+		@PostMapping("/skill")
+	public List<EmployeeDTO> getEmployeeBySkill(@RequestBody Skill skill) {
+		try {
+			return service.getEmployeeBySkill(skill);
+		} catch (Exception e) {
+			System.out.println("Employee not found" + e.toString());
+			return null;
+		}
+	}
+
+//	@GetMapping("/skill/{skill}")
+//	public List<EmployeeDTO> getEmployeeBySkill(@PathVariable String skill) {
+//		try {
+//			return service.getEmployeeBySkill(skill);
+//		} catch (Exception e) {
+//			System.out.println("Employee not found" + e.toString());
+//			return null;
+//		}
+//	}
+
+
+//	@PutMapping("/employees")
+//	public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+//		return ResponseEntity.ok(service.saveEmployee(employeeDTO));
+//	}
 
 	@DeleteMapping("/employees/{id}")
-	public ResponseEntity<String> deleteEmployee(@PathVariable int id){
-
-		if(service.getEmployee(id)!=null)
+	public ResponseEntity<?> deleteEmployee(@PathVariable int id) {
+		if (service.getEmployee(id) != null){
 			service.deleteEmployee(id);
-		else {
-			throw new NullPointerException();
-		}
-
-		return ResponseEntity.status(HttpStatus.OK).body("Employee Deleted Successfully");
-
+		return ResponseEntity.ok("DELETE SUCCESSFUL");
 	}
-
-
+		else {
+			throw new NullPointerException("Employee to be deleted not found.");
+		}
+	}
 
 }

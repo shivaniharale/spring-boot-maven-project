@@ -1,11 +1,15 @@
 package com.example.employeepayroll.dto;
 
+import com.example.employeepayroll.entity.Employee;
+
 import javax.persistence.Column;
 
 public class UserEntityDTO {
 
     private String userNameEntity;
     private String passwordEntity;
+    private String role;
+    private Employee employee;
 
     public UserEntityDTO() {
 
@@ -25,5 +29,22 @@ public class UserEntityDTO {
 
     public void setPasswordEntity(String passwordEntity) {
         this.passwordEntity = passwordEntity;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

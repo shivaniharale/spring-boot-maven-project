@@ -26,6 +26,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         UserEntity userEntity= (UserEntity) userEntityDAO.findByUserNameEntity(username);
+
         if(userEntity==null){
             throw new UsernameNotFoundException("User not found");
         }
@@ -34,6 +35,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     public UserEntity saveUser(UserEntityDTO userEntityDTO){
+//        TELL ABOUT DUPLICATE ENTRY
         UserEntity newUserEntity=new UserEntity();
         newUserEntity.setUserNameEntity(userEntityDTO.getUserNameEntity());
         newUserEntity.setPasswordEntity(passwordEncoder.encode(userEntityDTO.getPasswordEntity()));

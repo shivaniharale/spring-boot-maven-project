@@ -1,5 +1,7 @@
 package com.example.employeepayroll.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,7 +19,16 @@ public class UserEntity {
     @Column(name = "password")
     private String passwordEntity;
 
-    //role+enabled+user_employee
+    @Column(name = "role")
+    private String role;
+
+    @Column(name = "enabled")
+    private Boolean enabled;
+
+    @OneToOne( cascade=CascadeType.ALL)
+    @JoinColumn(name="user_employee")
+    @JsonIgnore
+    private Employee employee;
 
     public UserEntity() {
     }
@@ -42,4 +53,30 @@ public class UserEntity {
     public void setPasswordEntity(String passwordEntity) {
         this.passwordEntity = passwordEntity;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+
 }

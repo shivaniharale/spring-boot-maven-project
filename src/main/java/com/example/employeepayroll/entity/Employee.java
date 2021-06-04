@@ -2,25 +2,18 @@ package com.example.employeepayroll.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.mockito.internal.matchers.Null;
 
 @Entity
-@Table(name="Employee")
+@Table(name="employee")
 public class Employee implements Serializable {
 
 	@Id
@@ -52,42 +45,42 @@ public class Employee implements Serializable {
 	@Column(name="status")
 	private String status;
 
+	@OneToOne( cascade=CascadeType.ALL)
+	@JoinColumn(name="address_id")
+	@JsonIgnore
+	private Address address;
 
+	@OneToOne(mappedBy = "employee")
+	@JsonIgnore
+	private UserEntity userEntity;
 
-
-
-
-	//	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-//	@JoinColumn(name="details_id")
-//	@JsonIgnoreProperties("employee")
-//	private Details details;
-//
 	@OneToMany(mappedBy = "employee",cascade = {CascadeType.MERGE}, orphanRemoval = true)
 //	@JsonIgnoreProperties("employee")
 	@JsonIgnore
 	private List<Course> courses;
 
+	@ManyToMany(mappedBy = "employeeSet")
+	List<Skill> skills;
+
 	public Employee() {
 
 	}
 
-
+	public Employee(String firstName, String lastName, String phone, String email, int employeeNumber) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.employeeNumber = employeeNumber;
+	}
 
 	public List<Course> getCourses() {
 		return courses;
 	}
 
-
-
 	public void setCourses(List<Course> courses) {
-
-
 		this.courses = courses;
-
-
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -164,17 +157,55 @@ public class Employee implements Serializable {
 
 	public void addCourse(Course course) {
 
+		if (courses == null) {
+			courses = new ArrayList<>();
+		}
 		courses.add(course);
 		course.setEmployee(this);
 	}
 
-	@Override
-	public String toString() {
-		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone
-				+ ", email=" + email + ", employeeNumber=" + employeeNumber + ", salary=" + salary + ", post=" + post
-				+ ", status=" + status + "]";
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public List<Skill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
+	public void addSkill(Skill skill) {
+
+		if(skills== null){
+			List<Skill> skills=new ArrayList<>();
+		}
+		skills.add(skill);
+		skill.addEmployee(this);
 	}
 
 
-
+	@Override
+	public String toString() {
+		return "Employee{" +
+					   "id=" + id +
+					   ", firstName='" + firstName + '\'' +
+					   ", lastName='" + lastName + '\'' +
+					   ", phone='" + phone + '\'' +
+					   ", email='" + email + '\'' +
+					   ", employeeNumber=" + employeeNumber +
+					   ", salary=" + salary +
+					   ", post='" + post + '\'' +
+					   ", status='" + status + '\'' +
+					   ", address=" + address +
+					   ", userEntity=" + userEntity +
+					   ", courses=" + courses +
+					   ", skills=" + skills +
+					   '}';
+	}
 }

@@ -34,6 +34,14 @@ public class Course implements Serializable {
 	@JsonIgnore
 	private Employee employee;
 
+	public Course() {
+	}
+
+	public Course(int id, String courseName) {
+		this.id = id;
+		this.courseName = courseName;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -62,9 +70,5 @@ public class Course implements Serializable {
 	public String toString() {
 		return "Course [id=" + id + ", courseName=" + courseName + ", employee=" + employee + "]";
 	}
-
-
-
-
 
 }

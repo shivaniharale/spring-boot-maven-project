@@ -15,12 +15,11 @@ import com.example.employeepayroll.entity.Employee;
 @Component
 public class EmployeeConverter {
 
-
-	Logger log = Logger.getLogger(EmployeeConverter.class.getName());
+	@Autowired
+	AddressConverter addressConverter;
 
 	@Autowired
-	EmployeeConverter employeeConverter;
-
+	SkillConverter skillConverter;
 
 	@Autowired
 	CourseConverter courseConverter;
@@ -39,23 +38,15 @@ public class EmployeeConverter {
 		dto.setPost(employee.getPost());
 		dto.setStatus(employee.getStatus());
 		dto.setCourses(courseConverter.courseEntityToDTO(employee.getCourses()));
-
-		log.info("DTO"+employee.getCourses());
-		System.out.print("DTO"+courseConverter.courseEntityToDTO(employee.getCourses()));
-
-
+		dto.setAddressDTO(addressConverter.addressEntityToDTO(employee.getAddress()));
+		dto.setSkillsDTO(skillConverter.skillEntityToDTO(employee.getSkills()));
 
 		return dto;
 	}
 
-
 	public List<EmployeeDTO> employeeEntityToDTO(List<Employee> employees) {
-
 		return employees.stream().map(x->employeeEntityToDTO(x)).collect(Collectors.toList());
-
 	}
-
-
 
 	public Employee employeeDtoToEntity(EmployeeDTO dto) {
 
@@ -71,6 +62,8 @@ public class EmployeeConverter {
 		employee.setPost(dto.getPost());
 		employee.setStatus(dto.getStatus());
 		employee.setCourses(courseConverter.courseDtoToEntity(dto.getCourses()));
+		employee.setAddress(addressConverter.addressDtoToEntity(dto.getAddressDTO()));
+		employee.setSkills(skillConverter.skillDtoToEntity(dto.getSkillsDTO()));
 
 		return employee;
 	}
