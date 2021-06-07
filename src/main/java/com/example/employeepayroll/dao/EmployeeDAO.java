@@ -30,4 +30,5 @@ public interface EmployeeDAO extends JpaRepository<Employee,Integer> {
 	@Query("SELECT e FROM Employee e WHERE e.firstName=:firstName AND e.lastName=:lastName")
 	Set<Skill> findByFirstNameLastName(@Param("firstName") String firstName,@Param("lastName") String lastName);
 
+
 }

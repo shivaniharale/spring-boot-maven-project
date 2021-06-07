@@ -19,6 +19,4 @@ public class SkillController {
     public List<SkillDTO> getSkills(){
         return skillService.getSkillsList();
     }
-
-
 }

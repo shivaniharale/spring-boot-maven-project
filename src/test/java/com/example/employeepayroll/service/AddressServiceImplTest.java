@@ -1,79 +1,86 @@
 package com.example.employeepayroll.service;
 
+import com.example.employeepayroll.Converter.AddressConverter;
 import com.example.employeepayroll.dao.AddressDAO;
-import com.example.employeepayroll.entity.Address;
+import com.example.employeepayroll.dto.AddressDTO;
+import com.example.employeepayroll.mock.MockForTest;
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
 class AddressServiceImplTest {
 
+    private final Logger log = LoggerFactory.getLogger(AddressServiceImplTest.class);
+
+    @BeforeEach
+    public void init() {
+        initMocks(this);
+    }
+
     @InjectMocks
-    AddressService addressService;
+    AddressServiceImpl addressServiceImpl;
 
     @Mock
     AddressDAO addressDAO;
 
+    @Mock
+    AddressConverter addressConverter;
+
+    List<AddressDTO> list=new ArrayList<AddressDTO>();
+
+    AddressDTO z=new AddressDTO(1,"vineth engrove","gopalnagar","panjim","north goa","goa","403521");
+    AddressDTO x=new AddressDTO(2,"vineth ","nagar","panjim","south goa","goa","403521");
+
+    List<AddressDTO> mockList=new ArrayList<AddressDTO>();
+
+
     @Test
+
     void getAddressByCity() {
 
-        Address a=new Address(1,"vineth engrove","gopalnagar","panjim","north goa","goa","403521");
-        Address b=new Address(1,"vineth ","nagar","panjim","south goa","goa","403321");
+        mockList.add(z);
+        mockList.add(x);
 
-        List<Address> listPanjim=new ArrayList<>();
-        listPanjim.add(a);
-        listPanjim.add(b);
+        Mockito.when(addressConverter.addressEntityToDTO(addressDAO.findByCity(any()))).thenReturn(MockForTest.getMockAddressDTOList());
 
-        when(addressDAO.findByCity("panjim")).thenReturn(listPanjim);
-        assertEquals(listPanjim,addressDAO.findByCity("panjim"));
+        list=addressServiceImpl.getAddressByCity(any());
 
-        when(addressDAO.findByCity("mumbai")).thenThrow(new NullPointerException("Not found")) ;
+        Assert.assertEquals(mockList.get(0).getCity(),list.get(0).getCity());
+        Assert.assertEquals(mockList.get(1).getCity(),list.get(1).getCity());
 
-        addressDAO.findByCity("mumbai");
 
+        Assert.assertNotNull(list);
     }
 
     @Test
     void getAddressByState() {
-        Address a=new Address(1,"vineth engrove","gopalnagar","panjim","north goa","goa","403521");
-        Address b=new Address(1,"vineth ","nagar","panjim","south goa","goa","403321");
+        mockList.add(z);
+        mockList.add(x);
 
-        List<Address> listGoa=new ArrayList<>();
-        listGoa.add(a);
-        listGoa.add(b);
+        Mockito.when(addressConverter.addressEntityToDTO(addressDAO.findByState(any()))).thenReturn(MockForTest.getMockAddressDTOList());
 
-        when(addressDAO.findByCity("goa")).thenReturn(listGoa);
-        assertEquals(listGoa,addressDAO.findByCity("goa"));
-    }
+        list=addressServiceImpl.getAddressByState(any());
 
-    @Test
-    void getAddressByPinCode() {
+        Assert.assertEquals(mockList.get(0).getCity(),list.get(0).getCity());
+        Assert.assertEquals(mockList.get(1).getCity(),list.get(1).getCity());
 
-        Address a=new Address(1,"vineth engrove","gopalnagar","panjim","north goa","goa","403521");
-        Address b=new Address(1,"vineth ","nagar","panjim","south goa","goa","403321");
-
-        List<Address> listGoa=new ArrayList<>();
-        listGoa.add(a);
-        listGoa.add(b);
-
-        List<Address> listPin=new ArrayList<>();
-
-        listPin.add(a);
-        when(addressDAO.findByPinCode("403521")).thenReturn(listPin);
-        assertEquals(listGoa,addressDAO.findByPinCode("403521"));
 
 
     }
+
 }

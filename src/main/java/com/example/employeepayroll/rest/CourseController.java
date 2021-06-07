@@ -16,29 +16,11 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-
     @RequestMapping(value = "/courses",method = RequestMethod.GET)
     public List<CourseDTO> getCourses(){
         return courseService.getEmployeeCourses();
     }
 
-
-
-
-//    @RequestMapping(value = "/courses/{}",method = RequestMethod.GET)
-//    public List<CourseDTO> getEmployeeCourses(@PathVariable String firstName,@PathVariable String lastName){
-//
-//       return courseService.getEmployeeCourses(firstName,lastName);
-//
-//    }
-
-    @PostMapping("/courses/{id}")
-    public ResponseEntity<String> saveCourseList(@PathVariable int id,@RequestBody CourseDTO newCourse){
-        courseService.saveCourse(newCourse);
-
-        return ResponseEntity.status(HttpStatus.OK).body("Course Saved Successfully");
-
-    }
 
 
 }

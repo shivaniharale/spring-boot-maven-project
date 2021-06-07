@@ -3,8 +3,10 @@ package com.example.employeepayroll.rest;
 import com.example.employeepayroll.Converter.EmployeeConverter;
 import com.example.employeepayroll.Converter.SkillConverter;
 import com.example.employeepayroll.dao.EmployeeDAO;
+import com.example.employeepayroll.dto.CourseDTO;
 import com.example.employeepayroll.dto.EmployeeDTO;
 
+import com.example.employeepayroll.dto.SkillDTO;
 import com.example.employeepayroll.entity.Skill;
 import com.example.employeepayroll.service.CourseService;
 import com.example.employeepayroll.service.EmployeeService;
@@ -104,31 +106,25 @@ public class EmployeeController {
 		}
 	}
 
-		@PostMapping("/skill")
-	public List<EmployeeDTO> getEmployeeBySkill(@RequestBody Skill skill) {
+	@GetMapping("/skills/{id}")
+	public List<SkillDTO> getEmployeeSkills(@PathVariable int id) {
 		try {
-			return service.getEmployeeBySkill(skill);
+			return service.getEmployeeSkills(id);
 		} catch (Exception e) {
-			System.out.println("Employee not found" + e.toString());
+			System.out.println("Skills not found" + e.toString());
 			return null;
 		}
 	}
 
-//	@GetMapping("/skill/{skill}")
-//	public List<EmployeeDTO> getEmployeeBySkill(@PathVariable String skill) {
-//		try {
-//			return service.getEmployeeBySkill(skill);
-//		} catch (Exception e) {
-//			System.out.println("Employee not found" + e.toString());
-//			return null;
-//		}
-//	}
-
-
-//	@PutMapping("/employees")
-//	public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
-//		return ResponseEntity.ok(service.saveEmployee(employeeDTO));
-//	}
+	@GetMapping("/courses/{id}")
+	public List<CourseDTO> getEmployeeCourses(@PathVariable int id) {
+		try {
+			return service.getEmployeeCourses(id);
+		} catch (Exception e) {
+			System.out.println("Skills not found" + e.toString());
+			return null;
+		}
+	}
 
 	@DeleteMapping("/employees/{id}")
 	public ResponseEntity<?> deleteEmployee(@PathVariable int id) {

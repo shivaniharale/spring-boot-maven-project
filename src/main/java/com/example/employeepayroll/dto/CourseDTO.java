@@ -12,6 +12,11 @@ public class CourseDTO {
 	public CourseDTO() {
 	}
 
+	public CourseDTO(int id, String courseName) {
+		this.id = id;
+		this.courseName = courseName;
+	}
+
 	public int getId() {
 		return id;
 	}

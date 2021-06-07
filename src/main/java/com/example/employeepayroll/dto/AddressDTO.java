@@ -13,6 +13,16 @@ public class AddressDTO {
     public AddressDTO() {
     }
 
+    public AddressDTO(int id, String street, String houseNumber, String city, String district, String state, String pinCode) {
+        this.id = id;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.city = city;
+        this.district = district;
+        this.state = state;
+        this.pinCode = pinCode;
+    }
+
     public int getId() {
         return id;
     }

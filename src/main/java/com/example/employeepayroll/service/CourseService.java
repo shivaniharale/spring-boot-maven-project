@@ -13,8 +13,6 @@ public interface CourseService {
 
     public List<CourseDTO> getEmployeeCourses(int id);
 
-    public ResponseEntity<String> saveCourse(CourseDTO newCourse);
-
     public List<CourseDTO> getEmployeeCourses();
 
 }

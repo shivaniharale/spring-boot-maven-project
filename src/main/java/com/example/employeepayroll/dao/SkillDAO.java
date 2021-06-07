@@ -12,7 +12,6 @@ import java.util.Set;
 @Repository
 public interface SkillDAO extends JpaRepository<Skill,Integer> {
 
-//find by skill name and display only 1st and last name
     List<Employee> findBySkill(String skill);
 
 }

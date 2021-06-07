@@ -6,70 +6,55 @@ import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+import com.example.employeepayroll.Converter.CourseConverter;
 import com.example.employeepayroll.dao.CourseDAO;
+import com.example.employeepayroll.dto.CourseDTO;
 import com.example.employeepayroll.entity.Course;
-import liquibase.pro.packaged.C;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
 class CourseServiceImplTest {
 
+    @BeforeEach
+    public void init(){
+        initMocks(this);
+    }
+
     @InjectMocks
-    CourseServiceImpl courseService;
+    private CourseServiceImpl courseService;
 
     @Mock
-    CourseDAO courseDAO;
+    private CourseDAO courseDAO;
 
-    @BeforeEach
-    void setUp() {
-        List<Course> list=new ArrayList<>();
-        Course one=new Course(1,"java");
-        Course two=new Course(2,"spring");
-        list.add(one);
-        list.add(two);
-    }
+    @Mock
+    private CourseConverter courseConverter;
 
-    @Test
-    void saveOrUpdateCourseList() {
-
-        Course one=new Course(5,"flutter");
-        when(courseDAO.save(one)).thenReturn(one);
-        assertThat(one.getId()).isGreaterThan(0);
-
-
-    }
-
-    @Test
-    void getEmployeeCourses() {
-
-
-    }
 
     @Test
     void testGetEmployeeCourses() {
+        List<CourseDTO> list=new ArrayList<>();
+        CourseDTO one=new CourseDTO(1,"java");
+        CourseDTO two=new CourseDTO(2,"spring");
 
-        List<Course> list=new ArrayList<>();
-        Course one=new Course(1,"java");
-        Course two=new Course(2,"spring");
-        list.add(one);
-        list.add(two);
+        when(courseConverter.courseEntityToDTO(courseDAO.findAll())).thenReturn(list);
 
-        when(courseDAO.findAll()).thenReturn(list);
-        assertNotNull(list);
-        assertEquals(list,courseDAO.findAll());
+        List<CourseDTO> l2=courseService.getEmployeeCourses();
+
+        Assert.assertEquals(list,l2);
+
 
     }
-
 
 }

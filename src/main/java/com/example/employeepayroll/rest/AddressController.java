@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 @RestController
-public class AddressController {
+    public class AddressController {
 
     @Autowired
     private AddressService addressService;

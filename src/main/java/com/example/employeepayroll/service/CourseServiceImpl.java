@@ -33,20 +33,6 @@ public class CourseServiceImpl implements CourseService{
     private CourseDAO courseDAO;
 
     @Override
-    public ResponseEntity<String> saveCourse(CourseDTO newCourse) {
-
-        try {
-            courseDAO.save(courseConverter.courseDtoToEntity(newCourse));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return (ResponseEntity<String>) ResponseEntity.ok();
-
-    }
-
-    @Override
     public List<CourseDTO> getEmployeeCourses(int id) {
 
         return courseConverter.courseEntityToDTO(employeeDAO.findById(id).getCourses());
@@ -55,12 +41,8 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public List<CourseDTO> getEmployeeCourses() {
-        try {
-            return courseConverter.courseEntityToDTO(courseDAO.findAll());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return courseConverter.courseEntityToDTO(courseDAO.findAll());
     }
+
 
 }

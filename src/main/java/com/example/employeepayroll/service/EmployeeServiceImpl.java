@@ -5,8 +5,12 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 
+import com.example.employeepayroll.Converter.CourseConverter;
 import com.example.employeepayroll.Converter.SkillConverter;
+import com.example.employeepayroll.dto.CourseDTO;
 import com.example.employeepayroll.dto.SkillDTO;
+import com.example.employeepayroll.entity.Course;
+import com.example.employeepayroll.entity.Employee;
 import com.example.employeepayroll.entity.Skill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +33,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private SkillConverter skillConverter;
+
+
+	@Autowired
+	private CourseConverter courseConverter;
 
 	private static final java.util.logging.Logger LOGGER= Logger.getLogger(String.valueOf(EmployeeServiceImpl.class));
 
@@ -130,20 +138,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+//	@Override
+//	public List<EmployeeDTO> getEmployeeBySkill(Skill skill) {
+//		return employeeConverter.employeeEntityToDTO(employeeDAO.findBySkills(skill));
+//	}
+//
+
+
 	@Override
-	public List<EmployeeDTO> getEmployeeBySkill(Skill skill) {
-		return employeeConverter.employeeEntityToDTO(employeeDAO.findBySkills(skill));
+	public List<SkillDTO> getEmployeeSkills(int id) {
+		Employee e=employeeDAO.findById(id);
+		List<Skill> list=e.getSkills();
+		return skillConverter.skillEntityToDTO(list);
 	}
 
-//
-//	@Override
-//	public Set<SkillDTO> getSkillsByEmployees(String firstName, String lastName) {
-//		Employee employee=new Employee();
-////		employee=employeeConverter.employeeEntityToDTO(employeeDAO.findByFirstNameLastName(firstName,lastName));
-//
-//		return null;
-//
-//	}
+	@Override
+	public List<CourseDTO> getEmployeeCourses(int id) {
+		Employee e=employeeDAO.findById(id);
+		List<Course> list=e.getCourses();
+		return courseConverter.courseEntityToDTO(list);
+	}
+
 
 
 }
