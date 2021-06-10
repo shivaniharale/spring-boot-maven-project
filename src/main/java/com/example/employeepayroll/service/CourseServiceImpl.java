@@ -44,5 +44,12 @@ public class CourseServiceImpl implements CourseService{
         return courseConverter.courseEntityToDTO(courseDAO.findAll());
     }
 
+    @Override
+    public ResponseEntity<?> saveCourse(int id, CourseDTO courseDTO) {
+        Employee employee=employeeDAO.findById(id);
+        employee.addCourse(courseConverter.courseDtoToEntity(courseDTO));
+        return ResponseEntity.ok("Saved Successfully");
+    }
+
 
 }

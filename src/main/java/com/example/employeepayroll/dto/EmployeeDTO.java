@@ -29,7 +29,8 @@ public class EmployeeDTO {
 	}
 
 
-	public EmployeeDTO(String firstName, String lastName, String phone, String email, int employeeNumber) {
+	public EmployeeDTO(int id,String firstName, String lastName, String phone, String email, int employeeNumber) {
+		this.id=id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;

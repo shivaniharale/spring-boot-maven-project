@@ -54,7 +54,7 @@ public class Employee implements Serializable {
 	@JsonIgnore
 	private UserEntity userEntity;
 
-	@OneToMany(mappedBy = "employee",cascade = {CascadeType.MERGE}, orphanRemoval = true)
+	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
 //	@JsonIgnoreProperties("employee")
 	@JsonIgnore
 	private List<Course> courses;
@@ -66,7 +66,8 @@ public class Employee implements Serializable {
 
 	}
 
-	public Employee(String firstName, String lastName, String phone, String email, int employeeNumber) {
+	public Employee(int id,String firstName, String lastName, String phone, String email, int employeeNumber) {
+		this.id=id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;

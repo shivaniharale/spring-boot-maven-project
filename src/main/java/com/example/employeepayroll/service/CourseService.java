@@ -15,4 +15,5 @@ public interface CourseService {
 
     public List<CourseDTO> getEmployeeCourses();
 
+    ResponseEntity<?> saveCourse(int id, CourseDTO courseDTO);
 }

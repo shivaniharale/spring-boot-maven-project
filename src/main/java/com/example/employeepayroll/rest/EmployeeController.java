@@ -24,18 +24,6 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 
-	@Autowired
-	private EmployeeDAO employeeDAO;
-
-	@Autowired
-	private EmployeeConverter employeeConverter;
-
-	@Autowired
-	SkillConverter skillConverter;
-
-	@Autowired
-	CourseService courseService;
-
 	private static final Logger LOGGER= Logger.getLogger(String.valueOf(EmployeeController.class));
 
 	@GetMapping("/employees")
