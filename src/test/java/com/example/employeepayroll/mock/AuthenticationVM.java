@@ -9,10 +9,10 @@ public class AuthenticationVM {
     public AuthenticationVM() {
     }
 
-    public AuthenticationVM(String user, String pass) {
-        this.user = user;
-        this.pass = pass;
-    }
+//    public AuthenticationVM(String user, String pass) {
+//        this.user = user;
+//        this.pass = pass;
+//    }
 
     public String getUser() {
         return user;
@@ -28,5 +28,13 @@ public class AuthenticationVM {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    @Override
+    public String toString() {
+        return "AuthenticationVM{" +
+                       "user='" + user + '\'' +
+                       ", pass='" + pass + '\'' +
+                       '}';
     }
 }

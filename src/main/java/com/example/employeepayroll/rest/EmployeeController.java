@@ -7,6 +7,7 @@ import com.example.employeepayroll.dto.CourseDTO;
 import com.example.employeepayroll.dto.EmployeeDTO;
 
 import com.example.employeepayroll.dto.SkillDTO;
+import com.example.employeepayroll.entity.Employee;
 import com.example.employeepayroll.entity.Skill;
 import com.example.employeepayroll.service.CourseService;
 import com.example.employeepayroll.service.EmployeeService;
@@ -24,7 +25,20 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 
+	@Autowired
+	private EmployeeDAO employeeDAO;
+
 	private static final Logger LOGGER= Logger.getLogger(String.valueOf(EmployeeController.class));
+
+//	@GetMapping("/employees")
+//	public List<Employee> getEmployeeList() {
+//		List<Employee> list = employeeDAO.findAll();
+//		if (list != null) {
+//			return employeeDAO.findAll();
+//		} else {
+//			throw new NullPointerException("Employee list is empty");
+//		}
+//	}
 
 	@GetMapping("/employees")
 	public List<EmployeeDTO> getEmployeeList() {
