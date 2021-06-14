@@ -2,6 +2,7 @@ package com.example.employeepayroll.service;
 
 import com.example.employeepayroll.Converter.EmployeeConverter;
 import com.example.employeepayroll.Converter.SkillConverter;
+import com.example.employeepayroll.dto.CourseDTO;
 import com.example.employeepayroll.entity.Employee;
 import com.example.employeepayroll.entity.Skill;
 import com.example.employeepayroll.repository.EmployeeRepo;
@@ -39,13 +40,20 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public List<EmployeeDTO> getEmployeesBySkill(String skill) {
-        Skill skill1=skillRepo.findBySkill(skill);
-        return employeeConverter.employeeEntityToDTO(skill1.getEmployeeSet());
+        try {
+            Skill skill1=skillRepo.findBySkill(skill);
+            return employeeConverter.employeeEntityToDTO(skill1.getEmployeeSet());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public ResponseEntity<?> saveEmployeeSkill(Skill skill) {
-        return ResponseEntity.ok(skillRepo.save(skill));
+    public ResponseEntity<?> saveEmployeeSkill(int id,SkillDTO skill) {
+        Employee employee= employeeRepo.findById(id);
+//            employee.addSkill(skillConverter.skillDtoToEntity(skill));
+        return ResponseEntity.ok("Saved Successfully");
     }
 
 }

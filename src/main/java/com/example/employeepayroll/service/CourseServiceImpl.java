@@ -26,23 +26,26 @@ public class CourseServiceImpl implements CourseService{
     private CourseRepo courseRepo;
 
     @Override
-    public List<CourseDTO> getEmployeeCourses(int id) {
-
-        return courseConverter.courseEntityToDTO(employeeRepo.findById(id).getCourses());
-
-    }
-
-    @Override
     public List<CourseDTO> getEmployeeCourses() {
-        return courseConverter.courseEntityToDTO(courseRepo.findAll());
+
+        try {
+            return courseConverter.courseEntityToDTO(courseRepo.findAll());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public ResponseEntity<?> saveCourse(int id, CourseDTO courseDTO) {
-        Employee employee= employeeRepo.findById(id);
-        employee.addCourse(courseConverter.courseDtoToEntity(courseDTO));
+    public ResponseEntity<?> saveCourses(int id, List<CourseDTO> courseList) {
+        try {
+            Employee employee= employeeRepo.findById(id);
+            for (CourseDTO c:courseList)
+            employee.addCourse(courseConverter.courseDtoToEntity(c));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.ok("Saved Successfully");
     }
-
 
 }

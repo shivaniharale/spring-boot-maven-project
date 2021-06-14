@@ -11,9 +11,7 @@ import java.util.Set;
 
 public interface CourseService {
 
-    public List<CourseDTO> getEmployeeCourses(int id);
-
     public List<CourseDTO> getEmployeeCourses();
 
-    ResponseEntity<?> saveCourse(int id, CourseDTO courseDTO);
+    ResponseEntity<?> saveCourses(int id, List<CourseDTO> courseList);
 }

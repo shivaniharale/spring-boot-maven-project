@@ -61,13 +61,14 @@ public class Skill {
                        '}';
     }
 
-    public void addEmployee(Employee employee) {
 
-        if(employeeSet== null){
-            List<Employee> employeeSet=new ArrayList<>();
-        }
-        employeeSet.add(employee);
-        employee.addSkill(this);
+//    public void addEmployee(Employee employee) {
+//            if (employeeSet == null) {
+//                employeeSet = new ArrayList<>();
+//            }
+//            employeeSet.add(employee);
+//            employee.addSkill(this);
+//        }
 
-    }
+
 }

@@ -181,14 +181,14 @@ public class Employee implements Serializable {
 		this.skills = skills;
 	}
 
-	public void addSkill(Skill skill) {
-
-		if(skills== null){
-			List<Skill> skills=new ArrayList<>();
-		}
-		skills.add(skill);
-		skill.addEmployee(this);
-	}
+//	public void addSkill(Skill skill) {
+//
+//		if (courses == null) {
+//			courses = new ArrayList<>();
+//		}
+//		skills.add(skill);
+//		skill.addEmployee(this);
+//	}
 
 
 }

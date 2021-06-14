@@ -22,12 +22,11 @@ public class CourseController {
         return courseService.getEmployeeCourses();
     }
 
-    @RequestMapping(value = "/saveCourse/{id}",method = RequestMethod.POST)
-    public ResponseEntity<?> saveCourse(@PathVariable int id,@RequestBody CourseDTO courseDTO){
+    @RequestMapping(value = "/saveCourses/{id}",method = RequestMethod.POST)
+    public ResponseEntity<?> saveCourses(@PathVariable int id,@RequestBody List<CourseDTO> courseList){
 
-        return courseService.saveCourse(id,courseDTO);
+        return courseService.saveCourses(id,courseList);
     }
-
 
 
 }

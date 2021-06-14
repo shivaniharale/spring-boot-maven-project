@@ -59,10 +59,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
-
-
-
-
 		@Override
 	public List<EmployeeDTO> getEmployeeByFirstName(String firstName) {
 		try {
@@ -142,16 +138,26 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<SkillDTO> getEmployeeSkills(int id) {
-		Employee e= employeeRepo.findById(id);
-		List<Skill> list=e.getSkills();
-		return skillConverter.skillEntityToDTO(list);
+		try {
+			Employee e= employeeRepo.findById(id);
+			List<Skill> list=e.getSkills();
+			return skillConverter.skillEntityToDTO(list);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<CourseDTO> getEmployeeCourses(int id) {
-		Employee e= employeeRepo.findById(id);
-		List<Course> list=e.getCourses();
-		return courseConverter.courseEntityToDTO(list);
+		try {
+			Employee e= employeeRepo.findById(id);
+			List<Course> list=e.getCourses();
+			return courseConverter.courseEntityToDTO(list);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -170,7 +176,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setPost(employeeDTO.getPost());
 		employee.setStatus(employeeDTO.getStatus());
 
-		return null;
+		return ResponseEntity.ok("Updated Employee Successfully");
 	}
 
 
