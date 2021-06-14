@@ -55,11 +55,11 @@ public class Employee implements Serializable {
 	private UserEntity userEntity;
 
 	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
-//	@JsonIgnoreProperties("employee")
 	@JsonIgnore
 	private List<Course> courses;
 
-	@ManyToMany(mappedBy = "employeeSet")
+	@ManyToMany(mappedBy = "employeeSet",cascade = CascadeType.ALL)
+	@JsonIgnore
 	List<Skill> skills;
 
 	public Employee() {
@@ -191,22 +191,4 @@ public class Employee implements Serializable {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Employee{" +
-					   "id=" + id +
-					   ", firstName='" + firstName + '\'' +
-					   ", lastName='" + lastName + '\'' +
-					   ", phone='" + phone + '\'' +
-					   ", email='" + email + '\'' +
-					   ", employeeNumber=" + employeeNumber +
-					   ", salary=" + salary +
-					   ", post='" + post + '\'' +
-					   ", status='" + status + '\'' +
-					   ", address=" + address +
-					   ", userEntity=" + userEntity +
-					   ", courses=" + courses +
-					   ", skills=" + skills +
-					   '}';
-	}
 }

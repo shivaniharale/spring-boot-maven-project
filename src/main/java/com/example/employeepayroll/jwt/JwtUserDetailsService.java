@@ -1,10 +1,9 @@
 package com.example.employeepayroll.jwt;
 
-import com.example.employeepayroll.dao.UserEntityDAO;
+import com.example.employeepayroll.repository.UserEntityRepo;
 import com.example.employeepayroll.dto.UserEntityDTO;
 import com.example.employeepayroll.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserEntityDAO userEntityDAO;
+    private UserEntityRepo userEntityRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -25,7 +24,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserEntity userEntity= (UserEntity) userEntityDAO.findByUserNameEntity(username);
+        UserEntity userEntity= (UserEntity) userEntityRepo.findByUserNameEntity(username);
 
         if(userEntity==null){
             throw new UsernameNotFoundException("User not found");
@@ -39,7 +38,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         UserEntity newUserEntity=new UserEntity();
         newUserEntity.setUserNameEntity(userEntityDTO.getUserNameEntity());
         newUserEntity.setPasswordEntity(passwordEncoder.encode(userEntityDTO.getPasswordEntity()));
-        return userEntityDAO.save(newUserEntity);
+        return userEntityRepo.save(newUserEntity);
 
     }
 

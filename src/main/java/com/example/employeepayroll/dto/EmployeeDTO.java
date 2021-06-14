@@ -1,6 +1,9 @@
 package com.example.employeepayroll.dto;
 
+import com.example.employeepayroll.entity.Address;
+import com.example.employeepayroll.entity.Course;
 import com.example.employeepayroll.entity.Skill;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -132,23 +135,5 @@ public class EmployeeDTO {
 
 	public void setSkillsDTO(List<SkillDTO> skillsDTO) {
 		this.skillsDTO = skillsDTO;
-	}
-
-	@Override
-	public String toString() {
-		return "EmployeeDTO{" +
-					   "id=" + id +
-					   ", firstName='" + firstName + '\'' +
-					   ", lastName='" + lastName + '\'' +
-					   ", phone='" + phone + '\'' +
-					   ", email='" + email + '\'' +
-					   ", employeeNumber=" + employeeNumber +
-					   ", salary=" + salary +
-					   ", post='" + post + '\'' +
-					   ", status='" + status + '\'' +
-					   ", courses=" + courses +
-					   ", addressDTO=" + addressDTO +
-					   ", skillsDTO=" + skillsDTO +
-					   '}';
 	}
 }

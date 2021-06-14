@@ -10,19 +10,10 @@ import java.util.Set;
 @Component
 public class SkillDTO {
 
-    private int id;
     private String skill;
     private List<EmployeeDTO> employeeSet;
 
     public SkillDTO() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getSkill() {
@@ -44,7 +35,6 @@ public class SkillDTO {
     @Override
     public String toString() {
         return "SkillDTO{" +
-                       "id=" + id +
                        ", skill='" + skill + '\'' +
                        '}';
     }

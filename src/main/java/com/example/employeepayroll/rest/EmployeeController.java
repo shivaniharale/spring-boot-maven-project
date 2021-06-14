@@ -1,15 +1,11 @@
 package com.example.employeepayroll.rest;
 
-import com.example.employeepayroll.Converter.EmployeeConverter;
-import com.example.employeepayroll.Converter.SkillConverter;
-import com.example.employeepayroll.dao.EmployeeDAO;
+import com.example.employeepayroll.entity.Employee;
+import com.example.employeepayroll.repository.EmployeeRepo;
 import com.example.employeepayroll.dto.CourseDTO;
 import com.example.employeepayroll.dto.EmployeeDTO;
 
 import com.example.employeepayroll.dto.SkillDTO;
-import com.example.employeepayroll.entity.Employee;
-import com.example.employeepayroll.entity.Skill;
-import com.example.employeepayroll.service.CourseService;
 import com.example.employeepayroll.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,19 +22,9 @@ public class EmployeeController {
 	private EmployeeService service;
 
 	@Autowired
-	private EmployeeDAO employeeDAO;
+	private EmployeeRepo employeeRepo;
 
 	private static final Logger LOGGER= Logger.getLogger(String.valueOf(EmployeeController.class));
-
-//	@GetMapping("/employees")
-//	public List<Employee> getEmployeeList() {
-//		List<Employee> list = employeeDAO.findAll();
-//		if (list != null) {
-//			return employeeDAO.findAll();
-//		} else {
-//			throw new NullPointerException("Employee list is empty");
-//		}
-//	}
 
 	@GetMapping("/employees")
 	public List<EmployeeDTO> getEmployeeList() {
@@ -54,6 +40,19 @@ public class EmployeeController {
 	public ResponseEntity<?> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
 		employeeDTO.setId(0);
 		return ResponseEntity.ok(service.saveEmployee(employeeDTO));
+	}
+
+	@PutMapping("/employees")
+	public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+
+		return ResponseEntity.ok(service.updateEmployee(employeeDTO));
+	}
+
+
+	@GetMapping("/firstNameLastName/{firstName}/{lastName}")
+	public Employee saveEmployeeSkill(@PathVariable String firstName, @PathVariable String lastName){
+		Employee e=employeeRepo.findByFirstNameLastName(firstName,lastName);
+		return e;
 	}
 
 	@RequestMapping(value = "/firstName/{firstName}",method = RequestMethod.GET)

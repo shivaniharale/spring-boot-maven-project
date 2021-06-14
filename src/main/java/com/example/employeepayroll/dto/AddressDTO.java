@@ -2,7 +2,6 @@ package com.example.employeepayroll.dto;
 
 public class AddressDTO {
 
-    private int id;
     private String street;
     private String houseNumber;
     private String city;
@@ -13,22 +12,13 @@ public class AddressDTO {
     public AddressDTO() {
     }
 
-    public AddressDTO(int id, String street, String houseNumber, String city, String district, String state, String pinCode) {
-        this.id = id;
+    public AddressDTO( String street, String houseNumber, String city, String district, String state, String pinCode) {
         this.street = street;
         this.houseNumber = houseNumber;
         this.city = city;
         this.district = district;
         this.state = state;
         this.pinCode = pinCode;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getStreet() {

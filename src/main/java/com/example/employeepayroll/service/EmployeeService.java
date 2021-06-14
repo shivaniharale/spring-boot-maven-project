@@ -29,9 +29,10 @@ public interface EmployeeService {
 
 	public List<EmployeeDTO> getEmployeeByPost(String post);
 
-//	List<EmployeeDTO> getEmployeeBySkill(Skill skill);
-
     List<SkillDTO> getEmployeeSkills(int id);
 
 	List<CourseDTO> getEmployeeCourses(int id);
+
+	ResponseEntity<?> updateEmployee( EmployeeDTO employeeDTO);
+
 }

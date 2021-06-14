@@ -1,7 +1,7 @@
 package com.example.employeepayroll.service;
 
 import com.example.employeepayroll.Converter.AddressConverter;
-import com.example.employeepayroll.dao.AddressDAO;
+import com.example.employeepayroll.repository.AddressRepo;
 import com.example.employeepayroll.dto.AddressDTO;
 import com.example.employeepayroll.mock.MockForTest;
 import org.junit.Assert;
@@ -36,15 +36,15 @@ class AddressServiceImplTest {
     AddressServiceImpl addressServiceImpl;
 
     @Mock
-    AddressDAO addressDAO;
+    AddressRepo addressRepo;
 
     @Mock
     AddressConverter addressConverter;
 
     List<AddressDTO> list=new ArrayList<AddressDTO>();
 
-    AddressDTO z=new AddressDTO(1,"vineth engrove","gopalnagar","panjim","north goa","goa","403521");
-    AddressDTO x=new AddressDTO(2,"vineth ","nagar","panjim","south goa","goa","403521");
+    AddressDTO z=new AddressDTO("vineth engrove","gopalnagar","panjim","north goa","goa","403521");
+    AddressDTO x=new AddressDTO("vineth ","nagar","panjim","south goa","goa","403521");
 
     List<AddressDTO> mockList=new ArrayList<AddressDTO>();
 
@@ -56,7 +56,7 @@ class AddressServiceImplTest {
         mockList.add(z);
         mockList.add(x);
 
-        Mockito.when(addressConverter.addressEntityToDTO(addressDAO.findByCity(any()))).thenReturn(MockForTest.getMockAddressDTOList());
+        Mockito.when(addressConverter.addressEntityToDTO(addressRepo.findByCity(any()))).thenReturn(MockForTest.getMockAddressDTOList());
 
         list=addressServiceImpl.getAddressByCity(any());
 
@@ -72,7 +72,7 @@ class AddressServiceImplTest {
         mockList.add(z);
         mockList.add(x);
 
-        Mockito.when(addressConverter.addressEntityToDTO(addressDAO.findByState(any()))).thenReturn(MockForTest.getMockAddressDTOList());
+        Mockito.when(addressConverter.addressEntityToDTO(addressRepo.findByState(any()))).thenReturn(MockForTest.getMockAddressDTOList());
 
         list=addressServiceImpl.getAddressByState(any());
 

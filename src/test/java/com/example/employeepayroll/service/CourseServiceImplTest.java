@@ -7,9 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 import com.example.employeepayroll.Converter.CourseConverter;
-import com.example.employeepayroll.dao.CourseDAO;
+import com.example.employeepayroll.repository.CourseRepo;
 import com.example.employeepayroll.dto.CourseDTO;
-import com.example.employeepayroll.entity.Course;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,7 +34,7 @@ class CourseServiceImplTest {
     private CourseServiceImpl courseService;
 
     @Mock
-    private CourseDAO courseDAO;
+    private CourseRepo courseRepo;
 
     @Mock
     private CourseConverter courseConverter;
@@ -45,10 +43,10 @@ class CourseServiceImplTest {
     @Test
     void testGetEmployeeCourses() {
         List<CourseDTO> list=new ArrayList<>();
-        CourseDTO one=new CourseDTO(1,"java");
-        CourseDTO two=new CourseDTO(2,"spring");
+        CourseDTO one=new CourseDTO("java");
+        CourseDTO two=new CourseDTO("spring");
 
-        when(courseConverter.courseEntityToDTO(courseDAO.findAll())).thenReturn(list);
+        when(courseConverter.courseEntityToDTO(courseRepo.findAll())).thenReturn(list);
 
         List<CourseDTO> l2=courseService.getEmployeeCourses();
 

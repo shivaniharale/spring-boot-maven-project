@@ -18,7 +18,7 @@ public class Skill {
     @Column(name = "skill")
     private String skill;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "employee_skill",
                 joinColumns = @JoinColumn(name = "skill_id"),
                 inverseJoinColumns = @JoinColumn(name = "employee_id"))

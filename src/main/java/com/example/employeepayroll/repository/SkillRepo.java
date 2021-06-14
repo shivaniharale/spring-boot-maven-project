@@ -1,17 +1,16 @@
-package com.example.employeepayroll.dao;
+package com.example.employeepayroll.repository;
 
-import com.example.employeepayroll.dto.EmployeeDTO;
 import com.example.employeepayroll.entity.Employee;
 import com.example.employeepayroll.entity.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
-public interface SkillDAO extends JpaRepository<Skill,Integer> {
+public interface SkillRepo extends JpaRepository<Skill,Integer> {
 
-    List<Employee> findBySkill(String skill);
+    public Skill findBySkill(String skill);
 
 }

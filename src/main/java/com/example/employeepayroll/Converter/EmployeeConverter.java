@@ -1,9 +1,10 @@
 package com.example.employeepayroll.Converter;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import org.jboss.logging.Logger;
+import com.example.employeepayroll.rest.EmployeeController;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class EmployeeConverter {
 	@Autowired
 	CourseConverter courseConverter;
 
+	private static final java.util.logging.Logger LOGGER= Logger.getLogger(String.valueOf(EmployeeController.class));
+
+
 	public EmployeeDTO employeeEntityToDTO(Employee employee) {
 
 		EmployeeDTO dto=new EmployeeDTO();
@@ -37,6 +41,11 @@ public class EmployeeConverter {
 		dto.setSalary(employee.getSalary());
 		dto.setPost(employee.getPost());
 		dto.setStatus(employee.getStatus());
+
+		LOGGER.info("ENTITY TO DTO:" +
+							"Course:"+employee.getCourses()+
+		"Address:"+employee.getAddress()+"Skills:"+employee.getSkills());
+
 		dto.setCourses(courseConverter.courseEntityToDTO(employee.getCourses()));
 		dto.setAddressDTO(addressConverter.addressEntityToDTO(employee.getAddress()));
 		dto.setSkillsDTO(skillConverter.skillEntityToDTO(employee.getSkills()));
@@ -61,12 +70,19 @@ public class EmployeeConverter {
 		employee.setSalary(dto.getSalary());
 		employee.setPost(dto.getPost());
 		employee.setStatus(dto.getStatus());
+
+		LOGGER.info("DTO TO ENTITY:" +
+							"Course:"+dto.getCourses()+
+							"Address:"+dto.getAddressDTO()+"Skills:"+dto.getSkillsDTO());
+
 		employee.setCourses(courseConverter.courseDtoToEntity(dto.getCourses()));
 		employee.setAddress(addressConverter.addressDtoToEntity(dto.getAddressDTO()));
 		employee.setSkills(skillConverter.skillDtoToEntity(dto.getSkillsDTO()));
 
 		return employee;
 	}
+
+
 
 	public List<Employee> employeeDtoToEntity(List<EmployeeDTO> dtos) {
 

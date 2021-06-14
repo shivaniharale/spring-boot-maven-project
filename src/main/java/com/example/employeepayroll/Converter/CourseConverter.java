@@ -17,7 +17,6 @@ public class CourseConverter {
 	public CourseDTO courseEntityToDTO(Course course) {
 
 		CourseDTO dto=new CourseDTO();
-		dto.setId(course.getId());
 		dto.setCourseName(course.getCourseName());
 
 		return dto;
@@ -33,7 +32,6 @@ public class CourseConverter {
 	public Course courseDtoToEntity(CourseDTO dto) {
 
 		Course course=new Course();
-		course.setId(dto.getId());
 		course.setCourseName(dto.getCourseName());
 
 		return course;

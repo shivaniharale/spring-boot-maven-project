@@ -90,7 +90,6 @@ class EmployeeControllerTest {
     @Test
     void createEmployee() throws Exception {
         EmployeeDTO e=new EmployeeDTO(5,"poo","patil","123425","orkut",999);
-        EmployeeDTO e2=new EmployeeDTO(5,"sonu","patil","666384","@coditas",94369);
 
 //        JwtRequest jwtRequest=new JwtRequest();
 //        jwtRequest.setUserName("shi");
@@ -123,10 +122,6 @@ class EmployeeControllerTest {
 
         HttpHeaders headers = new HttpHeaders();
         headers=getHeaders("shi","123");
-
-        List<EmployeeDTO> list=new ArrayList<EmployeeDTO>();
-        list.add(e);
-        list.add(e2);
 
         String inputContent=objectMapper.writeValueAsString(e);
 
@@ -173,14 +168,20 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void getEmployeeList() throws Exception {
+    void postFailureTest() throws Exception {
+
+        EmployeeDTO e=new EmployeeDTO();//(5,"poo","patil","123425","orkut",999);
 
         HttpHeaders headers = new HttpHeaders();
         headers=getHeaders("shi","123");
 
+        String inputContent=objectMapper.writeValueAsString(e);
+
         RequestBuilder requestBuilder= MockMvcRequestBuilders
-                                               .get("/api/employees")
+                                               .post("/api/employes")
+                                               .content(inputContent)
                                                .headers(headers)
+                                               .accept(MediaType.APPLICATION_JSON)
                                                .contentType(MediaType.APPLICATION_JSON);
 
         MvcResult result=mockMvc
@@ -189,9 +190,59 @@ class EmployeeControllerTest {
 
         MockHttpServletResponse response=result.getResponse();
 
-        Assert.assertEquals(HttpStatus.OK.value(),response.getStatus());
+        Assert.assertEquals(404,result.getResponse().getStatus());
+
+
 
     }
 
 
+    @Test
+    void updateEmployee() throws Exception {
+        EmployeeDTO e2=new EmployeeDTO(1,"SHIVA","HARALE","9049079632","shivani@coditas",10531);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers=getHeaders("shi","123");
+
+        String inputContent=objectMapper.writeValueAsString(e2);
+
+        RequestBuilder requestBuilder= MockMvcRequestBuilders
+                                               .put("/api/employees")
+                                               .content(inputContent)
+                                               .headers(headers)
+                                               .accept(MediaType.APPLICATION_JSON)
+                                               .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result=mockMvc
+                                 .perform(requestBuilder)
+                                 .andExpect(status().isOk())
+                                 .andReturn();
+
+        MockHttpServletResponse response=result.getResponse();
+
+        Assert.assertEquals(200,result.getResponse().getStatus());
+
+
+    }
+
+    @Test
+    void deleteEmployee() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        headers=getHeaders("shi","123");
+
+        RequestBuilder requestBuilder= MockMvcRequestBuilders
+                                               .delete("/api/employees/1")
+                                               .headers(headers);
+        MvcResult result=mockMvc
+                                 .perform(requestBuilder)
+                                 .andReturn();
+
+        MockHttpServletResponse response=result.getResponse();
+
+        Assert.assertEquals(200,result.getResponse().getStatus());
+
+
+
+
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.employeepayroll.dao;
+package com.example.employeepayroll.repository;
 
 import java.util.List;
 import java.util.Set;
@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmployeeDAO extends JpaRepository<Employee,Integer> {
+public interface EmployeeRepo extends JpaRepository<Employee,Integer> {
 
 	public List<Employee> findByFirstName(String firstName);
 
@@ -25,10 +25,7 @@ public interface EmployeeDAO extends JpaRepository<Employee,Integer> {
 
 	public Employee findById(int id);
 
-	List<Employee> findBySkills(Skill skill);
-
 	@Query("SELECT e FROM Employee e WHERE e.firstName=:firstName AND e.lastName=:lastName")
-	Set<Skill> findByFirstNameLastName(@Param("firstName") String firstName,@Param("lastName") String lastName);
-
+	Employee findByFirstNameLastName(@Param("firstName") String firstName,@Param("lastName") String lastName);
 
 }

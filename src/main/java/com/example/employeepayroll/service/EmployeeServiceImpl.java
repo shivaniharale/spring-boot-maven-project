@@ -1,7 +1,6 @@
 package com.example.employeepayroll.service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.employeepayroll.Converter.EmployeeConverter;
-import com.example.employeepayroll.dao.EmployeeDAO;
+import com.example.employeepayroll.repository.EmployeeRepo;
 import com.example.employeepayroll.dto.EmployeeDTO;
 
 @Service
@@ -26,14 +25,13 @@ import com.example.employeepayroll.dto.EmployeeDTO;
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
-	private EmployeeDAO employeeDAO;
+	private EmployeeRepo employeeRepo;
 
 	@Autowired
 	private EmployeeConverter employeeConverter;
 
 	@Autowired
 	private SkillConverter skillConverter;
-
 
 	@Autowired
 	private CourseConverter courseConverter;
@@ -44,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<EmployeeDTO> employeeList() {
 		try {
-			return employeeConverter.employeeEntityToDTO(employeeDAO.findAll());
+			return employeeConverter.employeeEntityToDTO(employeeRepo.findAll());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -54,12 +52,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public ResponseEntity<?> saveEmployee(EmployeeDTO employeeDTO) {
 		try {
-		return ResponseEntity.ok(employeeDAO.save(employeeConverter.employeeDtoToEntity(employeeDTO)));
+		return ResponseEntity.ok(employeeRepo.save(employeeConverter.employeeDtoToEntity(employeeDTO)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
+
+
+
+
 
 		@Override
 	public List<EmployeeDTO> getEmployeeByFirstName(String firstName) {
@@ -67,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 			LOGGER.warning("INSIDE SERVICE:"+firstName);
 
-			return employeeConverter.employeeEntityToDTO(employeeDAO.findByFirstName(firstName));
+			return employeeConverter.employeeEntityToDTO(employeeRepo.findByFirstName(firstName));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -77,7 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		@Override
 	public List<EmployeeDTO> getEmployeeByLastName(String lastName) {
 		try {
-			return employeeConverter.employeeEntityToDTO(employeeDAO.findByLastName(lastName));
+			return employeeConverter.employeeEntityToDTO(employeeRepo.findByLastName(lastName));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -87,7 +89,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeDTO getEmployee(int id) {
 		try {
-			return employeeConverter.employeeEntityToDTO(employeeDAO.findById(id));
+			return employeeConverter.employeeEntityToDTO(employeeRepo.findById(id));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -98,7 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public ResponseEntity<?> deleteEmployee(int id) {
 
 		try {
-			employeeDAO.deleteById(id);
+			employeeRepo.deleteById(id);
 			return ResponseEntity.ok("Delete successful");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,7 +112,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeDTO getEmployeeByEmployeeNumber(int employeeNumber) {
 		try {
-			return employeeConverter.employeeEntityToDTO(employeeDAO.findByEmployeeNumber(employeeNumber));
+			return employeeConverter.employeeEntityToDTO(employeeRepo.findByEmployeeNumber(employeeNumber));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -121,7 +123,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<EmployeeDTO> getEmployeeByStatus(String status) {
 		try {
-			return employeeConverter.employeeEntityToDTO(employeeDAO.findByStatus(status));
+			return employeeConverter.employeeEntityToDTO(employeeRepo.findByStatus(status));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -131,34 +133,45 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<EmployeeDTO> getEmployeeByPost(String post) {
 		try {
-			return employeeConverter.employeeEntityToDTO(employeeDAO.findByPost(post));
+			return employeeConverter.employeeEntityToDTO(employeeRepo.findByPost(post));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-//	@Override
-//	public List<EmployeeDTO> getEmployeeBySkill(Skill skill) {
-//		return employeeConverter.employeeEntityToDTO(employeeDAO.findBySkills(skill));
-//	}
-//
-
-
 	@Override
 	public List<SkillDTO> getEmployeeSkills(int id) {
-		Employee e=employeeDAO.findById(id);
+		Employee e= employeeRepo.findById(id);
 		List<Skill> list=e.getSkills();
 		return skillConverter.skillEntityToDTO(list);
 	}
 
 	@Override
 	public List<CourseDTO> getEmployeeCourses(int id) {
-		Employee e=employeeDAO.findById(id);
+		Employee e= employeeRepo.findById(id);
 		List<Course> list=e.getCourses();
 		return courseConverter.courseEntityToDTO(list);
 	}
 
+	@Override
+	public ResponseEntity<?> updateEmployee(EmployeeDTO employeeDTO) {
+
+		Employee employee=employeeRepo.findById(employeeDTO.getId());
+		LOGGER.info("EMPLOYEE TO UPDATE IS:"+employee.toString());
+
+		employee.setId(employeeDTO.getId());
+		employee.setFirstName(employeeDTO.getFirstName());
+		employee.setLastName(employeeDTO.getLastName());
+		employee.setPhone(employeeDTO.getPhone());
+		employee.setEmail(employeeDTO.getEmail());
+		employee.setEmployeeNumber(employeeDTO.getEmployeeNumber());
+		employee.setSalary(employeeDTO.getSalary());
+		employee.setPost(employeeDTO.getPost());
+		employee.setStatus(employeeDTO.getStatus());
+
+		return null;
+	}
 
 
 }
