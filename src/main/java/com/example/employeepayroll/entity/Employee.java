@@ -58,9 +58,14 @@ public class Employee implements Serializable {
 	@JsonIgnore
 	private List<Course> courses;
 
-	@ManyToMany(mappedBy = "employeeSet",cascade = CascadeType.ALL)
-	@JsonIgnore
-	List<Skill> skills;
+	@ManyToMany(fetch=FetchType.LAZY,
+			cascade= CascadeType.ALL)
+	@JoinTable(
+			name="employee_skill",
+			joinColumns=@JoinColumn(name="employee_id"),
+			inverseJoinColumns=@JoinColumn(name="skill_id")
+	)
+	private List<Skill> skills;
 
 	public Employee() {
 
@@ -181,14 +186,13 @@ public class Employee implements Serializable {
 		this.skills = skills;
 	}
 
-//	public void addSkill(Skill skill) {
-//
-//		if (courses == null) {
-//			courses = new ArrayList<>();
-//		}
-//		skills.add(skill);
-//		skill.addEmployee(this);
-//	}
+	public void addSkill(Skill skill) {
+
+		if (skills == null) {
+			skills = new ArrayList<>();
+		}
+		skills.add(skill);
+	}
 
 
 }

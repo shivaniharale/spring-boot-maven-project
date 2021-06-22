@@ -156,7 +156,11 @@
         <groupId>org.liquibase</groupId>
         <artifactId>liquibase-maven-plugin</artifactId>
         <version>4.3.2</version>
-        <configuration> 
+        <configuration>
+			<url>jdbc:mysql://localhost:3306/employee_payroll</url>
+			<username>root</username>
+			<password>root</password>
+			<outputChangeLogFile>src/main/resources/liquibase/changeLogFile.xml</outputChangeLogFile>
              <changeLogFile>src/main/resources/liquibase/liquibaseMaster.xml</changeLogFile>            
             <propertyFile>src/main/resources/application.properties</propertyFile>
         </configuration>                

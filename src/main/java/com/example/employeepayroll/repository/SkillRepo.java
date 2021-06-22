@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface SkillRepo extends JpaRepository<Skill,Integer> {
 
-    public Skill findBySkill(String skill);
+    public Skill findBySkillName(String skill);
 
 }

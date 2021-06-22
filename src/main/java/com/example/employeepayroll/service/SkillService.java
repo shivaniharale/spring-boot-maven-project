@@ -15,6 +15,6 @@ public interface SkillService {
 
     public List<EmployeeDTO> getEmployeesBySkill(String skill);
 
-    public ResponseEntity<?> saveEmployeeSkill(int id,SkillDTO skill);
+    public ResponseEntity<?> saveEmployeeSkill(int id,List<SkillDTO> skills);
 
 }

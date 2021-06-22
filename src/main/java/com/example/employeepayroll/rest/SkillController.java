@@ -38,25 +38,12 @@ public class SkillController {
         return skillService.getSkillsList();
     }
 
-//    @PostMapping("/saveSkills/{id}")
-//    public ResponseEntity<?> saveEmployeeSkill(@PathVariable int id,@RequestBody SkillDTO skill){
-//
-//        return ResponseEntity.ok(skillService.saveEmployeeSkill(id,skill));
-//    }
+    @PostMapping("/skills/{id}")
+    public ResponseEntity<?> saveSkills(@PathVariable int id,@RequestBody List<SkillDTO> skills)
+    {
+        return skillService.saveEmployeeSkill(id,skills);
 
-
-    @PostMapping("/saveSkills/{id}")
-    public ResponseEntity<?> saveEmployeeSkill(@PathVariable int id,@RequestBody List<Skill> skills){
-        List<Skill> skills1=new ArrayList<>();
-
-        for(Skill s:skills){
-            if(skillRepo.findBySkill(s.getSkill())==null){
-                skillRepo.save(s);}
-                skills1.add(s);
-        }
-        return ResponseEntity.ok("SAVED SUCCESSFULLY");
     }
-
 
 
 }

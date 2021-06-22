@@ -14,4 +14,6 @@ public interface CourseService {
     public List<CourseDTO> getEmployeeCourses();
 
     ResponseEntity<?> saveCourses(int id, List<CourseDTO> courseList);
+
+    ResponseEntity<?> updateCourse(String existingCourse, String replacementCourse);
 }

@@ -1,0 +1,97 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="Coditas (generated)" id="1624207694991-1">
+        <createTable tableName="address">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="house_number" type="VARCHAR(64)"/>
+            <column name="street" type="VARCHAR(64)"/>
+            <column name="city" type="VARCHAR(64)"/>
+            <column name="district" type="VARCHAR(64)"/>
+            <column name="state" type="VARCHAR(64)"/>
+            <column name="pin_code" type="VARCHAR(64)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-2">
+        <createTable tableName="course">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="course_name" type="VARCHAR(64)"/>
+            <column name="employee_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-3">
+        <createTable tableName="employee">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(64)"/>
+            <column name="last_name" type="VARCHAR(64)"/>
+            <column name="phone" type="VARCHAR(64)"/>
+            <column name="email" type="VARCHAR(64)"/>
+            <column name="employee_number" type="INT"/>
+            <column name="salary" type="INT"/>
+            <column name="post" type="VARCHAR(64)"/>
+            <column name="status" type="VARCHAR(64)"/>
+            <column name="address_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-4">
+        <createTable tableName="employee_skill">
+            <column name="skill_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="employee_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-5">
+        <createTable tableName="skill">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="skill_name" type="VARCHAR(64)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-6">
+        <createTable tableName="user">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="username" type="VARCHAR(64)"/>
+            <column name="password" type="VARCHAR(64)"/>
+            <column name="role" type="VARCHAR(64)"/>
+            <column name="enabled" type="VARCHAR(64)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-7">
+        <createIndex indexName="FK_ADDRESS_id" tableName="employee">
+            <column name="address_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-8">
+        <createIndex indexName="FK_EMPLOYEE_Id" tableName="employee_skill">
+            <column name="employee_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-9">
+        <createIndex indexName="FK_EMPLOYEE_id" tableName="course">
+            <column name="employee_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-10">
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="employee" constraintName="FK_ADDRESS" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="address" validate="true"/>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-11">
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="course" constraintName="FK_EMPLOYEE" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-12">
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="employee_skill" constraintName="FK_EMPLOYEE_SKILL" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+    </changeSet>
+    <changeSet author="Coditas (generated)" id="1624207694991-13">
+        <addForeignKeyConstraint baseColumnNames="skill_id" baseTableName="employee_skill" constraintName="FK_SKILL" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="skill" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

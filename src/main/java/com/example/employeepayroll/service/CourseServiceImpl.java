@@ -1,6 +1,7 @@
 package com.example.employeepayroll.service;
 
 import com.example.employeepayroll.Converter.CourseConverter;
+import com.example.employeepayroll.entity.Course;
 import com.example.employeepayroll.repository.CourseRepo;
 import com.example.employeepayroll.repository.EmployeeRepo;
 import com.example.employeepayroll.dto.CourseDTO;
@@ -46,6 +47,15 @@ public class CourseServiceImpl implements CourseService{
             e.printStackTrace();
         }
         return ResponseEntity.ok("Saved Successfully");
+    }
+
+    @Override
+    public ResponseEntity<?> updateCourse(String existingCourse, String replacementCourse) {
+        Course course=courseRepo.findByCourseName(existingCourse);
+        course.setCourseName(replacementCourse);
+        courseRepo.save(course);
+
+        return null;
     }
 
 }

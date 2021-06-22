@@ -35,14 +35,15 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public List<SkillDTO> getSkillsList() {
+
         return skillConverter.skillEntityToDTO(skillRepo.findAll());
     }
 
     @Override
     public List<EmployeeDTO> getEmployeesBySkill(String skill) {
         try {
-            Skill skill1=skillRepo.findBySkill(skill);
-            return employeeConverter.employeeEntityToDTO(skill1.getEmployeeSet());
+            Skill skill1=skillRepo.findBySkillName(skill);
+            return employeeConverter.employeeEntityToDTO(skill1.getEmployees());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -50,9 +51,19 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public ResponseEntity<?> saveEmployeeSkill(int id,SkillDTO skill) {
-        Employee employee= employeeRepo.findById(id);
-//            employee.addSkill(skillConverter.skillDtoToEntity(skill));
+    public ResponseEntity<?> saveEmployeeSkill(int id,List<SkillDTO> skills) {
+
+        try {
+            Employee e=employeeRepo.findById(id);
+            for(SkillDTO s:skills){
+                Skill skill=skillConverter.skillDtoToEntity(s);
+                e.getSkills().add(skill);
+            }
+            employeeRepo.save(e);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
         return ResponseEntity.ok("Saved Successfully");
     }
 

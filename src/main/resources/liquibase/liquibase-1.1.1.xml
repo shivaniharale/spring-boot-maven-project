@@ -58,6 +58,7 @@
 			<column name="user_employee"/>
 		</createIndex>
 	</changeSet>
+
 	<changeSet author="shivani" id="5">
 		<addForeignKeyConstraint baseColumnNames="user_employee"
 								 baseTableName="users"
@@ -155,53 +156,76 @@
 
 	<!-- SKILLS TABLE-->
 	<changeSet id="12" author="shivani">
-		<createTable tableName="skills">
+		<createTable tableName="skill">
 			<column autoIncrement="true" name="id" type="INT">
 				<constraints nullable="false" primaryKey="true"/>
 			</column>
-			<column name="skill" type="VARCHAR(64)"/>
+			<column name="skill_name" type="VARCHAR(64)"/>
 		</createTable>
 	</changeSet>
 
-<!--	EMPLOYEE SKILLS TABLE-->
+
+
+
+	<changeSet author="shivani" id="50">
+		<addUniqueConstraint columnNames="skill_name"
+							 constraintName="skillUnique"
+							 tableName="skill"/>
+	</changeSet>
+
+
+
+
+
+	<!--	EMPLOYEE SKILLS TABLE-->
 
 	<changeSet id="13" author="shivani">
 		<createTable tableName="employee_skill">
-			<column name="employee_id" type="INT">
-				<constraints nullable="false"></constraints>
-			</column>
 			<column name="skill_id" type="INT">
-				<constraints nullable="false"></constraints>
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="employee_id" type="INT">
+				<constraints nullable="false" primaryKey="true"/>
 			</column>
 		</createTable>
 	</changeSet>
 
+
+
 <!--	EMPLOYEE SKILLS TABLE PRIMARY KEYS-->
 
-	<changeSet id="14" author="shivani">
-		<addPrimaryKey tableName="employee_skill" columnNames="employee_id,skill_id"/>
+	<changeSet author="shivani" id="20">
+		<createIndex indexName="FK_EMPLOYEE_Id" tableName="employee_skill">
+			<column name="employee_id"/>
+		</createIndex>
 	</changeSet>
 
 <!--	EMPLOYEE SKILLS TABLE FOREIGN KEY-->
 
-	<changeSet id="15" author="shivani">
-		<addForeignKeyConstraint baseTableName="employee_skill"
-								 baseColumnNames="employee_id"
-								 constraintName="fk_employee_skill_one"
-								 referencedTableName="employee"
-								 referencedColumnNames="id"
+	<changeSet author="shivani" id="30">
+		<addForeignKeyConstraint baseColumnNames="employee_id"
+								 baseTableName="employee_skill"
+								 constraintName="FK_EMPLOYEE_SKILL"
 								 deferrable="false"
-								 initiallyDeferred="false"/>
+								 initiallyDeferred="false"
+								 onDelete="RESTRICT"
+								 onUpdate="RESTRICT"
+								 referencedColumnNames="id"
+								 referencedTableName="employee"
+								 validate="true"/>
 	</changeSet>
 
-	<changeSet id="16" author="shivani">
-		<addForeignKeyConstraint baseTableName="employee_skill"
-								 baseColumnNames="skill_id"
-								 constraintName="fk_employee_skill_two"
-								 referencedTableName="skills"
-								 referencedColumnNames="id"
+	<changeSet author="shivani" id="40">
+		<addForeignKeyConstraint baseColumnNames="skill_id"
+								 baseTableName="employee_skill"
+								 constraintName="FK_SKILL"
 								 deferrable="false"
-								 initiallyDeferred="false"/>
+								 initiallyDeferred="false"
+								 onDelete="RESTRICT"
+								 onUpdate="RESTRICT"
+								 referencedColumnNames="id"
+								 referencedTableName="skill"
+								 validate="true"/>
 	</changeSet>
 
 </databaseChangeLog>

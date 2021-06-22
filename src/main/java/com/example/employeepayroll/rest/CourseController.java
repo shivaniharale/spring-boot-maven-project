@@ -28,5 +28,11 @@ public class CourseController {
         return courseService.saveCourses(id,courseList);
     }
 
+    @PutMapping("/courses/{existingCourse}/{replacementCourse}")
+    public ResponseEntity<?> updateEmployee(@PathVariable String existingCourse
+            ,@PathVariable String replacementCourse) {
+
+        return ResponseEntity.ok(courseService.updateCourse(existingCourse,replacementCourse));
+    }
 
 }

@@ -42,13 +42,9 @@ public class EmployeeConverter {
 		dto.setPost(employee.getPost());
 		dto.setStatus(employee.getStatus());
 
-		LOGGER.info("ENTITY TO DTO:" +
-							"Course:"+employee.getCourses()+
-		"Address:"+employee.getAddress()+"Skills:"+employee.getSkills());
-
-		dto.setCourses(courseConverter.courseEntityToDTO(employee.getCourses()));
-		dto.setAddressDTO(addressConverter.addressEntityToDTO(employee.getAddress()));
-		dto.setSkillsDTO(skillConverter.skillEntityToDTO(employee.getSkills()));
+//		dto.setCourses(courseConverter.courseEntityToDTO(employee.getCourses()));
+//		dto.setAddressDTO(addressConverter.addressEntityToDTO(employee.getAddress()));
+//		dto.setSkillsDTO(skillConverter.skillEntityToDTO(employee.getSkills()));
 
 		return dto;
 	}
@@ -71,13 +67,9 @@ public class EmployeeConverter {
 		employee.setPost(dto.getPost());
 		employee.setStatus(dto.getStatus());
 
-		LOGGER.info("DTO TO ENTITY:" +
-							"Course:"+dto.getCourses()+
-							"Address:"+dto.getAddressDTO()+"Skills:"+dto.getSkillsDTO());
-
-		employee.setCourses(courseConverter.courseDtoToEntity(dto.getCourses()));
-		employee.setAddress(addressConverter.addressDtoToEntity(dto.getAddressDTO()));
-		employee.setSkills(skillConverter.skillDtoToEntity(dto.getSkillsDTO()));
+//		employee.setCourses(courseConverter.courseDtoToEntity(dto.getCourses()));
+//		employee.setAddress(addressConverter.addressDtoToEntity(dto.getAddressDTO()));
+//		employee.setSkills(skillConverter.skillDtoToEntity(dto.getSkillsDTO()));
 
 		return employee;
 	}

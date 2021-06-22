@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "skills")
+@Table(name = "skill")
 public class Skill {
 
     @Id
@@ -15,17 +15,27 @@ public class Skill {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "skill")
-    private String skill;
+    @Column(name = "skill_name")
+    private String skillName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "employee_skill",
-                joinColumns = @JoinColumn(name = "skill_id"),
-                inverseJoinColumns = @JoinColumn(name = "employee_id"))
-    private List<Employee> employeeSet;
+    @ManyToMany(fetch=FetchType.LAZY,
+            cascade= CascadeType.ALL)
+    @JoinTable(
+            name="employee_skill",
+            joinColumns=@JoinColumn(name="skill_id"),
+            inverseJoinColumns=@JoinColumn(name="employee_id")
+    )
+    private List<Employee> employees;
+
+
 
     public Skill() {
 
+    }
+
+    public Skill(int id, String skill) {
+        this.id = id;
+        this.skillName = skill;
     }
 
     public int getId() {
@@ -36,39 +46,28 @@ public class Skill {
         this.id = id;
     }
 
-    public String getSkill() {
-        return skill;
+    public String getSkillName() {
+        return skillName;
     }
 
-    public void setSkill(String skill) {
-        this.skill = skill;
+    public void setSkillName(String skill) {
+        this.skillName = skill;
     }
 
-    public List<Employee> getEmployeeSet() {
-        return employeeSet;
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setEmployeeSet(List<Employee> employeeSet) {
-        this.employeeSet = employeeSet;
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
-    @Override
-    public String toString() {
-        return "Skill{" +
-                       "id=" + id +
-                       ", skill='" + skill + '\'' +
-                       ", employeeSet=" + employeeSet +
-                       '}';
+    public void addEmployee(Employee employee) {
+
+        if (employees == null) {
+            employees = new ArrayList<>();
+        }
+        employees.add(employee);
     }
-
-
-//    public void addEmployee(Employee employee) {
-//            if (employeeSet == null) {
-//                employeeSet = new ArrayList<>();
-//            }
-//            employeeSet.add(employee);
-//            employee.addSkill(this);
-//        }
-
 
 }

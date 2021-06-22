@@ -14,7 +14,7 @@ public class SkillConverter {
     public SkillDTO skillEntityToDTO(Skill skill) {
 
         SkillDTO dto=new SkillDTO();
-        dto.setSkill(skill.getSkill());
+        dto.setSkillName(skill.getSkillName());
 
         return dto;
     }
@@ -28,7 +28,7 @@ public class SkillConverter {
     public Skill skillDtoToEntity(SkillDTO dto) {
 
         Skill skill=new Skill();
-        skill.setSkill(dto.getSkill());
+        skill.setSkillName(dto.getSkillName());
 
         return skill;
     }
