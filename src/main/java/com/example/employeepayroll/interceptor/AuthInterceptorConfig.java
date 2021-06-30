@@ -16,6 +16,7 @@ public class AuthInterceptorConfig extends WebMvcConfigurerAdapter {
     {
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/authenticate");
+                .excludePathPatterns("/login")
+                .excludePathPatterns("/signup");
     }
 }

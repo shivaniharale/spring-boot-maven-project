@@ -10,6 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {
@@ -23,16 +25,17 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
 
-    @RequestMapping(value = "/authenticate",method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest,
+                                                       HttpServletRequest httpServletRequest) throws Exception {
         authenticate(authenticationRequest.getUserName(),authenticationRequest.getPassword());
         final UserDetails userDetails=jwtUserDetailsService
                                               .loadUserByUsername(authenticationRequest.getUserName());
-        final String token=jwtTokenUtil.generateToken(userDetails);
+        final String token=jwtTokenUtil.generateToken(userDetails,httpServletRequest);
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @RequestMapping(value = "/signup",method = RequestMethod.POST)
     public ResponseEntity<?> saveUser(@RequestBody UserEntityDTO userEntityDTO)throws Exception{
 
         return ResponseEntity.ok(jwtUserDetailsService.saveUser(userEntityDTO));

@@ -55,7 +55,7 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //                .antMatchers("/employees")
 //                .hasRole("admin")
-                .antMatchers("/authenticate","/register")
+                .antMatchers("/login","/signup")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -65,7 +65,7 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/authenticate")
+                .logoutSuccessUrl("/login")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
