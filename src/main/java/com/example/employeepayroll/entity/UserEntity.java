@@ -1,12 +1,16 @@
 package com.example.employeepayroll.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.envers.Audited;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Table(name = "users")
-public class UserEntity {
+@Audited
+public class UserEntity extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +29,10 @@ public class UserEntity {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    @OneToOne( cascade=CascadeType.ALL)
-    @JoinColumn(name="user_employee")
-    @JsonIgnore
-    private Employee employee;
+//    @OneToOne( cascade=CascadeType.ALL)
+//    @JoinColumn(name="user_employee")
+//    @JsonIgnore
+//    private Employee employee;
 
     public UserEntity() {
     }
@@ -70,12 +74,25 @@ public class UserEntity {
         this.enabled = enabled;
     }
 
-    public Employee getEmployee() {
-        return employee;
+//    public Employee getEmployee() {
+//        return employee;
+//    }
+//
+//    public void setEmployee(Employee employee) {
+//        this.employee = employee;
+//    }
+
+
+    @PrePersist
+    public void setAuditPrePersist(){
+        this.setCreatedDate(Instant.now());
+        this.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    @PreUpdate
+    public void setAuditPreUpdate(){
+        this.setLastUpdatedDate(Instant.now());
+        this.setLastUpdatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
 
