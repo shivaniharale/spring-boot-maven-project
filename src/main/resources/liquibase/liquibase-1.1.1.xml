@@ -235,4 +235,13 @@
 								 validate="true"/>
 	</changeSet>
 
+<!--	<changeSet id="shivani" author="21">-->
+<!--		<createTable tableName="revinfo">-->
+<!--			<column name="rev" type="INT">-->
+<!--				<constraints nullable="false" primaryKey="true"/>-->
+<!--			</column>-->
+<!--			<column name="revtstmp" type="BIGINT"/>-->
+<!--		</createTable>-->
+<!--	</changeSet>-->
+
 </databaseChangeLog>
