@@ -31,6 +31,7 @@
 			</column>
 			<column name="username" type="VARCHAR(64)"/>
 			<column name="password" type="VARCHAR(64)"/>
+			<column name="user_email" type="VARCHAR(64)"/>
 			<column name="role" type="VARCHAR(64)"/>
 			<column name="enabled" type="BOOLEAN"/>
 
@@ -38,6 +39,9 @@
 			<column name="last_updated_by" type="VARCHAR(64)"/>
 			<column name="created_date" type="DATETIME"/>
 			<column name="last_updated_date" type="DATETIME"/>
+
+			<column name="one_time_password" type="VARCHAR(64)"/>
+			<column name="otp_requested_time" type="DATETIME"/>
 
 
 			<column name="user_employee" type="INT(16)"/>

@@ -1,11 +1,14 @@
 package com.example.employeepayroll.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import org.hibernate.envers.Audited;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "users")
@@ -17,17 +20,29 @@ public class UserEntity extends Auditable<String> {
     @Column(name = "id")
     private int id;
 
+    @NotNull
     @Column(name = "username")
     private String userNameEntity;
 
+    @NotNull
     @Column(name = "password")
     private String passwordEntity;
+
+    @NotNull
+    @Column(name = "user_email")
+    private String userEmail;
 
     @Column(name = "role")
     private String role;
 
     @Column(name = "enabled")
     private Boolean enabled;
+
+    @Column(name = "one_time_password")
+    private String oneTimePassword;
+
+    @Column(name = "otp_requested_time")
+    private Date otpRequestedTime;
 
 //    @OneToOne( cascade=CascadeType.ALL)
 //    @JoinColumn(name="user_employee")
@@ -40,6 +55,30 @@ public class UserEntity extends Auditable<String> {
     public UserEntity(String userNameEntity, String passwordEntity) {
         this.userNameEntity = userNameEntity;
         this.passwordEntity = passwordEntity;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getOneTimePassword() {
+        return oneTimePassword;
+    }
+
+    public void setOneTimePassword(String oneTimePassword) {
+        this.oneTimePassword = oneTimePassword;
+    }
+
+    public Date getOtpRequestedTime() {
+        return otpRequestedTime;
+    }
+
+    public void setOtpRequestedTime(Date otpRequestedTime) {
+        this.otpRequestedTime = otpRequestedTime;
     }
 
     public String getUserNameEntity() {

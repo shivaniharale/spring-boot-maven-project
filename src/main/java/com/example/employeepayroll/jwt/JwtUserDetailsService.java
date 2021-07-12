@@ -38,6 +38,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         UserEntity newUserEntity=new UserEntity();
         newUserEntity.setUserNameEntity(userEntityDTO.getUserNameEntity());
         newUserEntity.setPasswordEntity(passwordEncoder.encode(userEntityDTO.getPasswordEntity()));
+        newUserEntity.setUserEmail(userEntityDTO.getUserEmail());
         return userEntityRepo.save(newUserEntity);
 
     }

@@ -9,10 +9,20 @@ public class UserEntityDTO {
     private String userNameEntity;
     private String passwordEntity;
     private String role;
+    private String userEmail;
     private Employee employee;
+
 
     public UserEntityDTO() {
 
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getUserNameEntity() {
