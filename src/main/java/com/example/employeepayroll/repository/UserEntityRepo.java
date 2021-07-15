@@ -9,4 +9,6 @@ public interface UserEntityRepo extends JpaRepository<UserEntity,Integer> {
 
     UserEntity findByUserNameEntity(String userName);
 
+    UserEntity findByOneTimePassword(String OTP);
+
 }

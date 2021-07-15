@@ -35,4 +35,5 @@ public interface EmployeeService {
 
 	ResponseEntity<?> updateEmployee( EmployeeDTO employeeDTO);
 
+	ResponseEntity<?> addEmployeeDetails(EmployeeDTO employeeDTO);
 }

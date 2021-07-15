@@ -50,9 +50,9 @@ public class Employee implements Serializable {
 	@JsonIgnore
 	private Address address;
 
-//	@OneToOne(mappedBy = "employee")
-//	@JsonIgnore
-//	private UserEntity userEntity;
+	@OneToOne(mappedBy = "employee")
+	@JsonIgnore
+	private UserEntity userEntity;
 
 	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
 	@JsonIgnore

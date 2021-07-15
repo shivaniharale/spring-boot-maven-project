@@ -26,6 +26,13 @@ public class EmployeeController {
 
 	private static final Logger LOGGER= Logger.getLogger(String.valueOf(EmployeeController.class));
 
+	@PostMapping("/editDetails")
+	public ResponseEntity<?> addEmployeeDetails(@RequestBody EmployeeDTO employeeDTO) {
+		employeeDTO.setId(0);
+		return ResponseEntity.ok(service.addEmployeeDetails(employeeDTO));
+	}
+
+
 	@GetMapping("/employees")
 	public List<EmployeeDTO> getEmployeeList() {
 		List<EmployeeDTO> list = service.employeeList();

@@ -43,6 +43,7 @@
 			<column name="one_time_password" type="VARCHAR(64)"/>
 			<column name="otp_requested_time" type="DATETIME"/>
 
+			<column name="email_verified" type="BOOLEAN"/>
 
 			<column name="user_employee" type="INT(16)"/>
 		</createTable>

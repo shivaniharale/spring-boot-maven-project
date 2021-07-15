@@ -3,6 +3,7 @@ package com.example.employeepayroll.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
@@ -44,10 +45,14 @@ public class UserEntity extends Auditable<String> {
     @Column(name = "otp_requested_time")
     private Date otpRequestedTime;
 
-//    @OneToOne( cascade=CascadeType.ALL)
-//    @JoinColumn(name="user_employee")
-//    @JsonIgnore
-//    private Employee employee;
+    @Column(name = "email_verified")
+    private Boolean verified;
+
+    @OneToOne( cascade=CascadeType.ALL)
+    @JoinColumn(name="user_employee")
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    @JsonIgnore
+    private Employee employee;
 
     public UserEntity() {
     }
@@ -55,6 +60,14 @@ public class UserEntity extends Auditable<String> {
     public UserEntity(String userNameEntity, String passwordEntity) {
         this.userNameEntity = userNameEntity;
         this.passwordEntity = passwordEntity;
+    }
+
+    public Boolean getVerified() {
+        return verified;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
     }
 
     public String getUserEmail() {
@@ -113,13 +126,13 @@ public class UserEntity extends Auditable<String> {
         this.enabled = enabled;
     }
 
-//    public Employee getEmployee() {
-//        return employee;
-//    }
-//
-//    public void setEmployee(Employee employee) {
-//        this.employee = employee;
-//    }
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
 
     @PrePersist

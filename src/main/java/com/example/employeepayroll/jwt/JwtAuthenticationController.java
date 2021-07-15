@@ -3,6 +3,7 @@ package com.example.employeepayroll.jwt;
 import com.example.employeepayroll.dto.UserEntityDTO;
 import com.example.employeepayroll.entity.UserEntity;
 import com.example.employeepayroll.repository.UserEntityRepo;
+import com.example.employeepayroll.service.OtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,8 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.ValidationException;
 
 @RestController
 @CrossOrigin
@@ -37,6 +40,9 @@ public class JwtAuthenticationController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private OtpService otpService;
+
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest,
                                                        HttpServletRequest httpServletRequest) throws Exception {
@@ -50,9 +56,39 @@ public class JwtAuthenticationController {
     @RequestMapping(value = "/signup",method = RequestMethod.POST)
     public ResponseEntity<?> saveUser(@RequestBody UserEntityDTO userEntityDTO)throws Exception{
 
-        return ResponseEntity.ok(jwtUserDetailsService.saveUser(userEntityDTO));
+        try {
+            jwtUserDetailsService.saveUser(userEntityDTO);
+            UserEntity user=userEntityRepo.findByUserNameEntity(userEntityDTO.getUserNameEntity());
+            otpService.generateOTP(userEntityDTO.getUserNameEntity());
+            otpService.sendOTP(user.getUserEmail(),user.getOneTimePassword());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+//        otpService.clearOTP(user);
+        return ResponseEntity.ok("Sign Up Successful");
     }
 
+    @PostMapping("email-verification")
+    public ResponseEntity<?> emailVerification(@RequestParam("OTP") String OTP,
+                                               @RequestParam("userName") String userName) throws ValidationException {
+
+        try {
+            if(OTP==userEntityRepo.findByUserNameEntity(userName).getOneTimePassword()){
+                UserEntity userEntity=userEntityRepo.findByUserNameEntity(userName);
+                userEntity.setVerified(true);
+                otpService.clearOTP(userName);
+
+            }
+            else {
+                throw new ValidationException("Invalid OTP");
+            }
+        } catch (ValidationException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok("Email Verification Successful");
+
+    }
 
     @PostMapping("/updatepassword")
     public ResponseEntity<?> changePassword(@RequestParam("oldPassword") String oldPassword,

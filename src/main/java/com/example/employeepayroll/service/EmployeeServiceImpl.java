@@ -11,8 +11,11 @@ import com.example.employeepayroll.dto.SkillDTO;
 import com.example.employeepayroll.entity.Course;
 import com.example.employeepayroll.entity.Employee;
 import com.example.employeepayroll.entity.Skill;
+import com.example.employeepayroll.entity.UserEntity;
+import com.example.employeepayroll.repository.UserEntityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +38,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private CourseConverter courseConverter;
+
+	@Autowired
+	private UserEntityRepo userEntityRepo;
 
 	private static final java.util.logging.Logger LOGGER= Logger.getLogger(String.valueOf(EmployeeServiceImpl.class));
 
@@ -177,6 +183,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setStatus(employeeDTO.getStatus());
 
 		return ResponseEntity.ok("Updated Employee Successfully");
+	}
+
+	@Override
+	public ResponseEntity<?> addEmployeeDetails(EmployeeDTO employeeDTO) {
+		String name= SecurityContextHolder.getContext().getAuthentication().getName();
+		UserEntity user=userEntityRepo.findByUserNameEntity(name);
+		user.setEmployee(employeeConverter.employeeDtoToEntity(employeeDTO));
+		userEntityRepo.save(user);
+		return null;
 	}
 
 

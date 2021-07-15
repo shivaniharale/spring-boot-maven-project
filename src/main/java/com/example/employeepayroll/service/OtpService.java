@@ -9,13 +9,13 @@ import java.util.Date;
 
 public interface OtpService {
 
-    public void generateOTP(UserEntity userEntity) throws MessagingException;
+    public void generateOTP(String userName) throws MessagingException;
 
     //sends otp using email
-    public void sendOTP(UserEntity user,String OTP ) throws MessagingException;
+    public void sendOTP(String userEmail,String OTP ) throws MessagingException;
 
     //clear otp from userEntity table
-    public void clearOTP(UserEntity userEntity);
+    public void clearOTP(String userName);
 
 
 
